@@ -21,11 +21,12 @@ void    store_buffer(char *buf, size_t *buf_len, char ch)
     (*buf_len)++;
 }
 
-void    clean_buffer(char *buf, size_t *buf_len)
+void    clean_buffer(char *buf, size_t *buf_len, int *res)
 {
     if (*buf_len > 0)
     {
         ft_putstr(buf);
+        *res += *buf_len;
         *buf_len = 0;
     }
 }
@@ -54,14 +55,16 @@ int	ft_printf(const char *str, ...)
     va_list args;
     char    buf[BUFFER_SIZE];
     size_t  buf_len;
+    int     res;
 
     va_start(args, str);
     buf_len = 0;
+    res = 0;
     while (*str != '\0')
     {
         if (*str == '%')
         {
-            clean_buffer(buf, &buf_len);
+            clean_buffer(buf, &buf_len, &res);
             print_format(*(++str), args);
             str++;
             continue;
@@ -69,41 +72,25 @@ int	ft_printf(const char *str, ...)
         store_buffer(buf, &buf_len, *str);
         str++;
     }
-    ft_putstr(buf);
-    return (buf_len);
+    clean_buffer(buf, &buf_len, &res);
+    return (res);
 }
 
-
-
-// void print(const char *str, ...)
-// {
-//     va_list args;
-
-//     va_start(args, str);
-//     ft_printf("%d %d %d hihihihhisaldjsald %c\n", args);
-//     va_end(args);
-
-//     va_start(args, str);
-//     printf("%d %d %d hihihihhisaldjsald %c\n", args);
-//     va_end(args);
-// }
 #include <stdio.h>
 int main(){
-    // ft_printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
-    // printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
-    // int n = 5;
-    // ft_printf("%p\n", &n);
-    // printf("%p\n", &n);
-    // int hex = 2147483648;
     // ft_printf("%d\n", 2147483648);
     // printf("%d\n", 2147483648);
 
-    ft_printf("%%\n", -2);
-    printf("%%\n", -2);
+    // ft_printf("%%\n", -2);
+    // printf("%%\n", -2);
 
     // ft_printf("%p\n", -1);
     // printf("%p\n", -1);
 
     // ft_printf("%s\n", 0);
     // printf("%s\n", 0);
+
+    int n = printf("%d %d\n", 5, 6);
+    int n2 = ft_printf("%d %d\n", 5, 6);
+    printf("%d %d\n", n, n2);
 }
