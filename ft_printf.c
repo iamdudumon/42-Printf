@@ -12,15 +12,6 @@
 
 #include "ft_printf.h"
 
-void    store_buffer(char *buf, size_t *buf_len, char ch)
-{
-    if (*buf_len == BUFFER_SIZE)
-        ft_putstr(buf);
-    buf[*buf_len] = ch;
-    buf[*buf_len + 1] = '\0';
-    (*buf_len)++;
-}
-
 void    clean_buffer(char *buf, size_t *buf_len, int *res)
 {
     if (*buf_len > 0)
@@ -29,6 +20,15 @@ void    clean_buffer(char *buf, size_t *buf_len, int *res)
         *res += *buf_len;
         *buf_len = 0;
     }
+}
+
+void    store_buffer(char *buf, size_t *buf_len, int *res, char ch)
+{
+    if (*buf_len == BUFFER_SIZE)
+        clean_buffer(buf, buf_len, res);
+    buf[*buf_len] = ch;
+    buf[*buf_len + 1] = '\0';
+    (*buf_len)++;
 }
 
 int    print_format(char format, va_list args)
@@ -69,7 +69,7 @@ int	ft_printf(const char *str, ...)
             str++;
             continue;
         }
-        store_buffer(buf, &buf_len, *str);
+        store_buffer(buf, &buf_len, &res, *str);
         str++;
     }
     clean_buffer(buf, &buf_len, &res);
@@ -90,7 +90,16 @@ int main(){
     // ft_printf("%s\n", 0);
     // printf("%s\n", 0);
 
-    int n = printf("%d %d\n", 5, 6);
-    int n2 = ft_printf("%d %d\n", 5, 6);
-    printf("%d %d\n", n, n2);
+    int n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
+    int n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
+    printf("%d %d\n", n1, n2);
+
+    // ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+    // printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+
+    // ft_printf("%s\t\t---%p\n", 0, 0);
+    // printf("%s\t\t---%p\n", 0, 0);
+
+    // ft_printf("%x %X\n", 23408230948230, -111);
+    // printf("%x %X\n", 23408230948230, -111);
 }
