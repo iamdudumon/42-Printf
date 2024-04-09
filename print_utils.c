@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dukim <dukim@student.42gyeonsan.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 16:29:50 by dukim             #+#    #+#             */
-/*   Updated: 2024/04/04 16:40:47 by dukim            ###   ########.fr       */
+/*   Created: 2024/04/09 17:29:02 by dukim             #+#    #+#             */
+/*   Updated: 2024/04/09 17:29:06 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+int	pow_ten(unsigned int un)
+{
+	unsigned int	pow;
 
-# define BUFFER_SIZE 42
-
-# include "libft/libft.h"
-
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdarg.h>
-
-void    ft_putchar(const char ch);
-void    ft_putstr(const char *str);
-void	ft_putnbr(int n);
-void    ft_putaddr(const void *addr);
-
-#endif
+	if (un >= 1000000000)
+		return (1000000000);
+	pow = 1;
+	while (pow <= un)
+		pow *= 10;
+	return (pow / 10);
+}

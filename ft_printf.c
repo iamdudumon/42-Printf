@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
-#include <stdio.h>
 
 void    store_buffer(char *buf, size_t *buf_len, char ch)
 {
@@ -42,6 +40,8 @@ int    print_format(char format, va_list args)
         ft_putstr(va_arg(args, char *));
     else if (format == 'd' || format == 'i')
         ft_putnbr(va_arg(args, int));
+    else if (format == 'p')
+        ft_putaddr(va_arg(args, void *));
     return (0);
 }
 
@@ -85,7 +85,8 @@ int	ft_printf(const char *str, ...)
 // }
 
 int main(){
-    ft_printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
-    printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
-    // print("%d %d %d hihihihhisaldjsald %c\n", 1, 2, 3, "a");
+    // ft_printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
+    // printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
+    int n =5;
+    ft_printf("%p\n", &n);
 }

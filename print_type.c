@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "ft_print.h"
+#include "print_utils.h"
 
 void    ft_putchar(const char ch)
 {
@@ -23,18 +24,6 @@ void    ft_putstr(const char *str)
 
     len = ft_strlen(str);
     write(1, str, len);
-}
-
-static int	pow_ten(unsigned int un)
-{
-	unsigned int	pow;
-
-	if (un >= 1000000000)
-		return (1000000000);
-	pow = 1;
-	while (pow <= un)
-		pow *= 10;
-	return (pow / 10);
 }
 
 void	ft_putnbr(int n)
@@ -68,5 +57,10 @@ void	ft_putnbr(int n)
 
 void    ft_putaddr(const void *addr)
 {
-    
+    unsigned long	pointer;
+	size_t			i;
+
+	i = -1;
+	pointer = (unsigned long)addr;
+	write(1, "0x", 2);
 }
