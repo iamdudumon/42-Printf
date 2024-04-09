@@ -38,8 +38,8 @@ int    print_format(char format, va_list args)
         ft_putchar(va_arg(args, int));
     else if (format == 's')
         ft_putstr(va_arg(args, char *));
-    else if (format == 'd' || format == 'i')
-        ft_putnbr(va_arg(args, int));
+    else if (format == 'd' || format == 'i' || format == 'u')
+        ft_putnbr(va_arg(args, int), format != 'u');
     else if (format == 'p')
         ft_putaddr(va_arg(args, void *));
     else if (format == 'X' || format == 'x')
@@ -93,6 +93,15 @@ int main(){
     // ft_printf("%p\n", &n);
     // printf("%p\n", &n);
     // int hex = 2147483648;
-    ft_printf("%x\n", 2147483649);
-    printf("%x\n", 2147483649);
+    // ft_printf("%d\n", 2147483648);
+    // printf("%d\n", 2147483648);
+
+    ft_printf("%u\n", -2);
+    printf("%u\n", -2);
+
+    // ft_printf("%p\n", -1);
+    // printf("%p\n", -1);
+
+    // ft_printf("%s\n", 0);
+    // printf("%s\n", 0);
 }

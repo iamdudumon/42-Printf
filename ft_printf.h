@@ -23,7 +23,7 @@
 
 void    ft_putchar(const char ch);
 void    ft_putstr(const char *str);
-void	ft_putnbr(int n);
+void	ft_putnbr(int n, int sign_flag);
 void    ft_putaddr(const void *addr);
 void	ft_puthex(unsigned long n, int case_flag, int addr_flag);
 

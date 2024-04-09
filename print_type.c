@@ -31,7 +31,7 @@ void    ft_putstr(const char *str)
     write(1, str, len);
 }
 
-void	ft_putnbr(int n)
+void	ft_putnbr(int n, int sign_flag)
 {
 	char				nbr[12];
 	unsigned int		pow;
@@ -39,13 +39,14 @@ void	ft_putnbr(int n)
 	size_t				i;
 
 	i = 0;
-	if (n < 0)
+	un = n;
+	if (sign_flag && n < 0)
 	{
 		un = -n;
 		nbr[i++] = '-';
 	}
-	else
-		un = n;
+	else if (!sign_flag && n < 0)
+		un = n + 2147483648 * 2;	
 	pow = pow_ten(un);
 	while (pow)
 	{
@@ -53,11 +54,10 @@ void	ft_putnbr(int n)
 		un = un % pow;
 		pow /= 10;
 	}
-	nbr[i] = '\0';
 	if (i == 0)
-		ft_putstr("0");
+		write(1, "0", 1);
     else
-        ft_putstr(nbr);
+		write(1, nbr, i);
 }
 
 void	ft_puthex(unsigned long n, int case_flag, int addr_flag)
