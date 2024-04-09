@@ -12,7 +12,7 @@
 
 #include "libft/libft.h"
 
-void    ft_putchar(char ch)
+void    ft_putchar(const char ch)
 {
     write(1, &ch, 1);
 }
@@ -66,7 +66,7 @@ void	ft_putnbr(int n)
         ft_putstr(nbr);
 }
 
-void    ft_putaddr(void *addr)
+void    ft_putaddr(const void *addr)
 {
     
 }

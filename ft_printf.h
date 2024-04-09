@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-void    ft_putchar(char ch);
+void    ft_putchar(const char ch);
 void    ft_putstr(const char *str);
 void	ft_putnbr(int n);
 
