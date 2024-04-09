@@ -22,7 +22,12 @@ void    ft_putstr(const char *str)
 {
     size_t len;
 
-    len = ft_strlen(str);
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		return ;
+	}
+	len = ft_strlen(str);
     write(1, str, len);
 }
 
@@ -83,6 +88,11 @@ void	ft_puthex(unsigned long n, int case_flag, int addr_flag)
 
 void    ft_putaddr(const void *addr)
 {
+	if (!addr)
+	{
+		ft_putstr("(nil)");
+		return ;
+	}
 	write(1, "0x", 2);
 	ft_puthex((unsigned long)addr, 1, 1);
 }
