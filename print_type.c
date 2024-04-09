@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_print.h"
+#include "ft_printf.h"
 #include "print_utils.h"
 
 void    ft_putchar(const char ch)
@@ -55,12 +55,34 @@ void	ft_putnbr(int n)
         ft_putstr(nbr);
 }
 
+void	ft_puthex(unsigned long n, int case_flag, int addr_flag)
+{
+	char	*hex;
+	char	str[16];
+	size_t	i;
+	int		size;
+
+	if (case_flag)
+		hex = "0123456789abcdef";
+	else
+		hex = "0123456789ABCDEF";
+	if (size)
+		size = 16;
+	else
+		size = 8;
+	i = 0;
+	while (1)
+	{
+		str[size - 1 - i++] = hex[n % 16];
+		n = n / 16;
+		if (n == 0)
+			break;
+	}
+	write(1, str + size - i, i);
+}
+
 void    ft_putaddr(const void *addr)
 {
-    unsigned long	pointer;
-	size_t			i;
-
-	i = -1;
-	pointer = (unsigned long)addr;
 	write(1, "0x", 2);
+	ft_puthex((unsigned long)addr, 1, 1);
 }

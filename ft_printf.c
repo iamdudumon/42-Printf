@@ -42,6 +42,8 @@ int    print_format(char format, va_list args)
         ft_putnbr(va_arg(args, int));
     else if (format == 'p')
         ft_putaddr(va_arg(args, void *));
+    else if (format == 'X' || format == 'x')
+        ft_puthex(va_arg(args, unsigned int), format == 'x', 0);
     return (0);
 }
 
@@ -83,10 +85,14 @@ int	ft_printf(const char *str, ...)
 //     printf("%d %d %d hihihihhisaldjsald %c\n", args);
 //     va_end(args);
 // }
-
+#include <stdio.h>
 int main(){
     // ft_printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
     // printf("%d %d %d hihihihhisaldjsald %c\n", 1, 2, "a", "a");
-    int n =5;
-    ft_printf("%p\n", &n);
+    // int n = 5;
+    // ft_printf("%p\n", &n);
+    // printf("%p\n", &n);
+    // int hex = 2147483648;
+    ft_printf("%x\n", 2147483649);
+    printf("%x\n", 2147483649);
 }
