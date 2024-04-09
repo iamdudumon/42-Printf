@@ -44,6 +44,8 @@ int    print_format(char format, va_list args)
         ft_putaddr(va_arg(args, void *));
     else if (format == 'X' || format == 'x')
         ft_puthex(va_arg(args, unsigned int), format == 'x', 0);
+    else if (format == '%')
+        ft_putchar('%');
     return (0);
 }
 
@@ -96,8 +98,8 @@ int main(){
     // ft_printf("%d\n", 2147483648);
     // printf("%d\n", 2147483648);
 
-    ft_printf("%u\n", -2);
-    printf("%u\n", -2);
+    ft_printf("%%\n", -2);
+    printf("%%\n", -2);
 
     // ft_printf("%p\n", -1);
     // printf("%p\n", -1);
