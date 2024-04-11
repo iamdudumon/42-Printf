@@ -13,15 +13,15 @@
 #include "ft_printf.h"
 #include "print_utils.h"
 
-int    ft_putchar(const char ch)
+int	ft_putchar(const char ch)
 {
-    write(1, &ch, 1);
+	write(1, &ch, 1);
 	return (1);
 }
 
-int    ft_putstr(const char *str)
+int	ft_putstr(const char *str)
 {
-    size_t len;
+	size_t	len;
 
 	if (!str)
 	{
@@ -29,7 +29,7 @@ int    ft_putstr(const char *str)
 		return (6);
 	}
 	len = ft_strlen(str);
-    write(1, str, len);
+	write(1, str, len);
 	return (len);
 }
 
@@ -81,13 +81,13 @@ int	ft_puthex(unsigned long n, int case_flag, int addr_flag)
 		str[size - 1 - i++] = hex[n % 16];
 		n = n / 16;
 		if (n == 0)
-			break;
+			break ;
 	}
 	write(1, str + size - i, i);
 	return (i);
 }
 
-int    ft_putaddr(const void *addr)
+int	ft_putaddr(const void *addr)
 {
 	if (!addr)
 	{
