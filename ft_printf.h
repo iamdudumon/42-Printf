@@ -21,10 +21,10 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-void    ft_putchar(const char ch);
-void    ft_putstr(const char *str);
-void	ft_putnbr(int n, int sign_flag);
-void    ft_putaddr(const void *addr);
-void	ft_puthex(unsigned long n, int case_flag, int addr_flag);
+int ft_putchar(const char ch);
+int ft_putstr(const char *str);
+int ft_putnbr(int n, int sign_flag);
+int ft_putaddr(const void *addr);
+int ft_puthex(unsigned long n, int case_flag, int addr_flag);
 
 #endif

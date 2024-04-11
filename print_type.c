@@ -13,31 +13,35 @@
 #include "ft_printf.h"
 #include "print_utils.h"
 
-void    ft_putchar(const char ch)
+int    ft_putchar(const char ch)
 {
     write(1, &ch, 1);
+	return (1);
 }
 
-void    ft_putstr(const char *str)
+int    ft_putstr(const char *str)
 {
     size_t len;
 
 	if (!str)
 	{
 		write(1, "(null)", 6);
-		return ;
+		return (6);
 	}
 	len = ft_strlen(str);
     write(1, str, len);
+	return (len);
 }
 
-void	ft_putnbr(int n, int sign_flag)
+int	ft_putnbr(int n, int sign_flag)
 {
 	char				nbr[12];
 	unsigned int		pow;
 	unsigned int		un;
 	size_t				i;
 
+	if (n == 0)
+		return (ft_putchar('0'));
 	i = 0;
 	un = n;
 	if (sign_flag && n < 0)
@@ -46,7 +50,7 @@ void	ft_putnbr(int n, int sign_flag)
 		nbr[i++] = '-';
 	}
 	else if (!sign_flag && n < 0)
-		un = n + 2147483648 * 2;	
+		un = n + 2147483648 * 2;
 	pow = pow_ten(un);
 	while (pow)
 	{
@@ -54,13 +58,11 @@ void	ft_putnbr(int n, int sign_flag)
 		un = un % pow;
 		pow /= 10;
 	}
-	if (i == 0)
-		write(1, "0", 1);
-    else
-		write(1, nbr, i);
+	write(1, nbr, i);
+	return (i);
 }
 
-void	ft_puthex(unsigned long n, int case_flag, int addr_flag)
+int	ft_puthex(unsigned long n, int case_flag, int addr_flag)
 {
 	char	*hex;
 	char	str[16];
@@ -84,15 +86,16 @@ void	ft_puthex(unsigned long n, int case_flag, int addr_flag)
 			break;
 	}
 	write(1, str + size - i, i);
+	return (i);
 }
 
-void    ft_putaddr(const void *addr)
+int    ft_putaddr(const void *addr)
 {
 	if (!addr)
 	{
 		ft_putstr("(nil)");
-		return ;
+		return (5);
 	}
 	write(1, "0x", 2);
-	ft_puthex((unsigned long)addr, 1, 1);
+	return (ft_puthex((unsigned long)addr, 1, 1) + 2);
 }

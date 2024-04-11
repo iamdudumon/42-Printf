@@ -36,17 +36,17 @@ int    print_format(char format, va_list args)
     const char *enable_format = "cspdiuxX";
  
     if (format == 'c')
-        ft_putchar(va_arg(args, int));
+        return (ft_putchar(va_arg(args, int)));
     else if (format == 's')
-        ft_putstr(va_arg(args, char *));
+        return (ft_putstr(va_arg(args, char *)));
     else if (format == 'd' || format == 'i' || format == 'u')
-        ft_putnbr(va_arg(args, int), format != 'u');
+        return (ft_putnbr(va_arg(args, int), format != 'u'));
     else if (format == 'p')
-        ft_putaddr(va_arg(args, void *));
+        return (ft_putaddr(va_arg(args, void *)));
     else if (format == 'X' || format == 'x')
-        ft_puthex(va_arg(args, unsigned int), format == 'x', 0);
+        return (ft_puthex(va_arg(args, unsigned int), format == 'x', 0));
     else if (format == '%')
-        ft_putchar('%');
+        return (ft_putchar('%'));
     return (0);
 }
 
@@ -65,7 +65,7 @@ int	ft_printf(const char *str, ...)
         if (*str == '%')
         {
             clean_buffer(buf, &buf_len, &res);
-            print_format(*(++str), args);
+            res += print_format(*(++str), args);
             str++;
             continue;
         }
@@ -78,8 +78,13 @@ int	ft_printf(const char *str, ...)
 
 #include <stdio.h>
 int main(){
-    // ft_printf("%d\n", 2147483648);
-    // printf("%d\n", 2147483648);
+    // int n1= ft_printf("%d\n", 0);
+    // int n2 = printf("%d\n", 0);
+    // printf("%d %d\n", n1, n2);
+
+    int n1= ft_printf("%u\n", 2147483648 + 2147483648 - 1);
+    int n2 = printf("%u\n", 2147483648 + 2147483648 - 1);
+    printf("%d %d\n", n1, n2);
 
     // ft_printf("%%\n", -2);
     // printf("%%\n", -2);
@@ -90,12 +95,13 @@ int main(){
     // ft_printf("%s\n", 0);
     // printf("%s\n", 0);
 
-    int n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
-    int n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
-    printf("%d %d\n", n1, n2);
+    // int n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
+    // int n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
+    // printf("%d %d\n", n1, n2);
 
-    // ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
-    // printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+    // int n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+    // int n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+    // printf("%d %d\n", n1, n2);
 
     // ft_printf("%s\t\t---%p\n", 0, 0);
     // printf("%s\t\t---%p\n", 0, 0);
