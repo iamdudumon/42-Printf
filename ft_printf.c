@@ -24,7 +24,7 @@ void	clean_buffer(t_buffer *buf, int *res)
 
 void	store_buffer(t_buffer *buf, int *res, char ch)
 {
-	if (*buf_len == BUFFER_SIZE)
+	if (buf->len == BUFFER_SIZE)
 		clean_buffer(buf, res);
 	buf->content[buf->len] = ch;
 	buf->content[buf->len + 1] = '\0';
