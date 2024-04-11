@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "print_utils.h"
 
 int	ft_putchar(const char ch)
 {
