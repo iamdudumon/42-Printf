@@ -69,14 +69,12 @@ int	ft_puthex(unsigned long n, int case_flag, int addr_flag)
 	size_t	i;
 	int		size;
 
+	hex = "0123456789ABCDEF";
 	if (case_flag)
 		hex = "0123456789abcdef";
-	else
-		hex = "0123456789ABCDEF";
-	if (size)
+	size = 8;
+	if (addr_flag)
 		size = 16;
-	else
-		size = 8;
 	i = 0;
 	while (1)
 	{
