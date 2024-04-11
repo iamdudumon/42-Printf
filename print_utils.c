@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "print_utils.h"
+
 int	pow_ten(unsigned int un)
 {
 	unsigned int	pow;
@@ -20,4 +22,14 @@ int	pow_ten(unsigned int un)
 	while (pow <= un)
 		pow *= 10;
 	return (pow / 10);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	const char *ori;
+
+	ori = str;
+	while (*str != '\0')
+		str++;
+	return (str - ori);
 }

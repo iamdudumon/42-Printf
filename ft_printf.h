@@ -15,7 +15,7 @@
 
 # define BUFFER_SIZE 42
 
-# include "libft/libft.h"
+// # include "libft/libft.h"
 
 # include <stdlib.h>
 # include <unistd.h>

@@ -13,6 +13,9 @@
 #ifndef PRINT_UTILS_H
 # define PRINT_UTILS_H
 
-int	pow_ten(unsigned int un);
+# include <unistd.h>
+
+int     pow_ten(unsigned int un);
+size_t  ft_strlen(const char *str);
 
 #endif
