@@ -33,4 +33,7 @@ int	ft_putnbr(int n, int sign_flag);
 int	ft_putaddr(const void *addr);
 int	ft_puthex(unsigned long n, int case_flag, int addr_flag);
 
+int		pow_ten(unsigned int un);
+size_t	ft_strlen(const char *str);
+
 #endif
