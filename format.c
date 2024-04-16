@@ -28,30 +28,28 @@ t_format    make_format(const char *str)
         width_len++;
     format.width = ft_atoi(*str, width_len);
     str += width_len;
-    format.spec.specifier = *str;
-    set_specifier(str, &(format.spec));
+    set_specifier(str, &(format.spec), *str);
     return (format);
 }
 
-void	set_specifier(const char *str, t_specifier *spec)
+void	set_specifier(const char *str, t_type *spec, char type)
 {
-	if (spec->specifier == '\0')
+	if (type == '\0')
         spec->len = 0;
-    if (spec->specifier == 'c')
+    if (type == 'c')
 		spec = ft_putchar(va_arg(args, int));
-	if (spec->specifier == 's')
+	if (type == 's')
 		spec = ft_putstr(va_arg(args, char *));
-	if (spec->specifier == 'd' || spec->specifier == 'i' || spec->specifier == 'u')
-		spec = ft_putnbr(va_arg(args, int), spec->specifier != 'u');
-	if (spec->specifier == 'p')
+	if (type == 'd' || type == 'i' || type == 'u')
+		spec = ft_putnbr(va_arg(args, int), type != 'u');
+	if (type == 'p')
 		spec = ft_putaddr(va_arg(args, void *));
-	if (spec->specifier == 'X' || spec->specifier == 'x')
-		spec = ft_puthex(va_arg(args, unsigned int), spec->specifier == 'x', 0);
-	if (spec->specifier == '%')
+	if (type == 'X' || type == 'x')
+		spec = ft_puthex(va_arg(args, unsigned int), type == 'x', 0);
+	if (type == '%')
 		spec = ft_putchar('%');
 	if (*(str + 1) != '\0')
 		spec = ft_putchar('%');
-	return (-1);
 }
 
 void    print_width(int width, int zero_flag)
