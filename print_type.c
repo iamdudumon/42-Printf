@@ -24,51 +24,59 @@ t_specifier	*ft_putchar(const char ch)
 	str[1] = '\0';
 	spec->str = ft_strdup(str);
 	spec->len = 1;
-	spec->specifier = 'c';
 	return (spec);
 }
 
-int	ft_putstr(const char *str)
+t_specifier	*ft_putstr(const char *str)
 {
-	size_t	len;
+	t_specifier	*spec;
+	size_t		len;
 
+	spec = (t_specifier *)malloc(sizeof(t_specifier));
+	if (!spec)
+		return (0);
 	if (!str)
 	{
-		write(1, "(null)", 6);
-		return (6);
+		spec->str = ft_strdup("(null)");
+		spec->len = 6;
+		return (spec);
 	}
-	len = ft_strlen(str);
-	write(1, str, len);
-	return (len);
+	spec->str = ft_strdup(str);
+	spec->len = ft_strlen(str);
+	return (spec);
 }
 
-int	ft_putnbr(int n, int sign_flag)
+t_specifier	*ft_putnbr(int n, int sign_flag)
 {
+	t_specifier			*spec;
 	char				nbr[12];
 	unsigned int		pow;
 	unsigned int		un;
-	size_t				i;
 
 	if (n == 0)
 		return (ft_putchar('0'));
-	i = 0;
+	spec = (t_specifier *)malloc(sizeof(t_specifier));
+	if (!spec)
+		return (0);
+	spec->len = 0;
 	un = n;
 	if (sign_flag && n < 0)
 	{
 		un = -n;
-		nbr[i++] = '-';
+		nbr[spec->len++] = '-';
 	}
 	else if (!sign_flag && n < 0)
 		un = n + 2147483648 * 2;
 	pow = pow_ten(un);
 	while (pow)
 	{
-		nbr[i++] = (un / pow) + '0';
+		nbr[spec->len++] = (un / pow) + '0';
 		un = un % pow;
 		pow /= 10;
 	}
-	write(1, nbr, i);
-	return (i);
+	nbr[spec->len] = '\0';
+	spec->str = ft_strdup(nbr);
+	return (spec);
 }
 
 int	ft_puthex(unsigned long n, int case_flag, int addr_flag)
