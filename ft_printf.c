@@ -57,7 +57,7 @@ static int	print_format(char **str, va_list args)
 	return (-1);
 }
 
-void	init_val(t_buffer *buf, int *res, int *error_flag)
+static void	init_val(t_buffer *buf, int *res, int *error_flag)
 {
 	buf->len = 0;
 	*res = 0;
