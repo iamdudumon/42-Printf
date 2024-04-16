@@ -15,8 +15,6 @@
 
 # define BUFFER_SIZE 42
 
-// # include "libft/libft.h"
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
@@ -27,11 +25,13 @@ typedef struct s_buffer
 	int		len;
 }			t_buffer;
 
-int	ft_putchar(const char ch);
-int	ft_putstr(const char *str);
-int	ft_putnbr(int n, int sign_flag);
-int	ft_putaddr(const void *addr);
-int	ft_puthex(unsigned long n, int case_flag, int addr_flag);
+int		ft_printf(const char *str, ...);
+
+int		ft_putchar(const char ch);
+int		ft_putstr(const char *str);
+int		ft_putnbr(int n, int sign_flag);
+int		ft_putaddr(const void *addr);
+int		ft_puthex(unsigned long n, int case_flag, int addr_flag);
 
 int		pow_ten(unsigned int un);
 size_t	ft_strlen(const char *str);

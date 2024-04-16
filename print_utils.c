@@ -26,7 +26,7 @@ int	pow_ten(unsigned int un)
 
 size_t	ft_strlen(const char *str)
 {
-	const char *ori;
+	const char	*ori;
 
 	ori = str;
 	while (*str != '\0')
