@@ -25,6 +25,21 @@ typedef struct s_buffer
 	int		len;
 }			t_buffer;
 
+typedef struct s_specifier
+{
+	char	specifier;
+	char	*str;
+	int		len;
+}			t_specifier;
+
+typedef struct s_format
+{
+	char		flag[3];
+	int			flag_cnt;
+	int			width;
+	t_specifier	spec;
+}			t_format;
+
 int		ft_printf(const char *str, ...);
 
 int		ft_putchar(const char ch);
@@ -35,5 +50,10 @@ int		ft_puthex(unsigned long n, int case_flag, int addr_flag);
 
 int		pow_ten(unsigned int un);
 size_t	ft_strlen(const char *str);
+int		ft_atoi(const char *nptr);
+char	*ft_strdup(const char *s);
+
+t_format    get_format(char *str);
+void    print_width(int width, int zero_flag);
 
 #endif
