@@ -27,7 +27,7 @@ typedef struct s_buffer
 
 typedef struct s_specifier
 {
-	char	specifier;
+	// char	specifier;
 	char	*str;
 	size_t	len;
 }			t_specifier;
