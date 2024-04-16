@@ -26,10 +26,42 @@ int	pow_ten(unsigned int un)
 
 size_t	ft_strlen(const char *str)
 {
-	const char *ori;
+	const char	*ori;
 
 	ori = str;
 	while (*str != '\0')
 		str++;
 	return (str - ori);
+}
+
+int	ft_atoi(const char *nptr, int len)
+{
+	int	sum;
+
+	sum = 0;
+	while (len > 0 && ('0' <=*nptr && *nptr <= '9'))
+	{
+		sum = sum * 10 + (*nptr - '0');
+		nptr++;
+		len--;
+	}
+	return (sum);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dup;
+	size_t	len;
+
+	len = ft_strlen(s);
+	dup = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dup)
+		return (0);
+	while (*str != '\0')
+	{
+		*dup = *str;
+		dup++;
+		str++;
+	}
+	return (dup);
 }

@@ -57,7 +57,7 @@ static int	print_format(char **str, va_list args)
 	return (-1);
 }
 
-void	init_val(t_buffer *buf, int *res, int *error_flag)
+static void	init_val(t_buffer *buf, int *res, int *error_flag)
 {
 	buf->len = 0;
 	*res = 0;
@@ -91,46 +91,3 @@ int	ft_printf(const char *str, ...)
 		return (-1);
 	return (res);
 }
-
-// #include <stdio.h>
-// int main(){
-//     // int n1, n2;
-
-//     // n1= ft_printf("%d\n", 0);
-//     // n2 = printf("%d\n", 0);
-//     // printf("%d %d\n", n1, n2);
-
-//     // n1= ft_printf("%u\n", 2147483648 + 2147483648 - 1);
-//     // n2 = printf("%u\n", 2147483648 + 2147483648 - 1);
-//     // printf("%d %d\n", n1, n2);
-
-//     // ft_printf("%%\n", -2);
-//     // printf("%%\n", -2);
-
-//     // ft_printf("%p\n", -1);
-//     // printf("%p\n", -1);
-
-//     // ft_printf("%s\n", 0);
-//     // printf("%s\n", 0);
-
-//     // n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
-//     // n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
-//     // printf("%d %d\n", n1, n2);
-
-//     // n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
-//     // n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
-//     // printf("%d %d\n", n1, n2);
-
-//     // ft_printf("%s\t\t---%p\n", 0, 0);
-//     // printf("%s\t\t---%p\n", 0, 0);
-
-//     // ft_printf("%x %X\n", 23408230948230, -111);
-//     // printf("%x %X\n", 23408230948230, -111);
-
-//     // n1 = ft_printf("%d %z", 5, 5);
-//     // printf("%d\n", n1);
-//     // n2 = printf("%d %z", 5, 5);
-//     // printf("%d\n", n2);
-// 	ft_printf("%z \n");
-// 	printf("%z \n");
-// }
