@@ -29,7 +29,7 @@ typedef struct s_specifier
 {
 	char	specifier;
 	char	*str;
-	int		len;
+	size_t	len;
 }			t_specifier;
 
 typedef struct s_format

@@ -12,10 +12,20 @@
 
 #include "ft_printf.h"
 
-int	ft_putchar(const char ch)
+t_specifier	*ft_putchar(const char ch)
 {
-	write(1, &ch, 1);
-	return (1);
+	t_specifier	*spec;
+	char		str[2];
+	
+	spec = (t_specifier *)malloc(sizeof(t_specifier));
+	if (!spec)
+		return (0);
+	str[0] = ch;
+	str[1] = '\0';
+	spec->str = ft_strdup(str);
+	spec->len = 1;
+	spec->specifier = 'c';
+	return (spec);
 }
 
 int	ft_putstr(const char *str)
