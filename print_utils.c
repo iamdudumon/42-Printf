@@ -12,6 +12,16 @@
 
 #include "ft_printf.h"
 
+int	ft_strlen(const char *str)
+{
+	const char	*ori;
+
+	ori = str;
+	while (*str != '\0')
+		str++;
+	return (str - ori);
+}
+
 int	pow_ten(unsigned int un)
 {
 	unsigned int	pow;
@@ -24,20 +34,12 @@ int	pow_ten(unsigned int un)
 	return (pow / 10);
 }
 
-size_t	ft_strlen(const char *str)
-{
-	const char	*ori;
-
-	ori = str;
-	while (*str != '\0')
-		str++;
-	return (str - ori);
-}
-
 int	ft_atoi(const char *nptr, int len)
 {
 	int	sum;
 
+	if (len == 0)
+		return (0);
 	sum = 0;
 	while (len > 0 && ('0' <=*nptr && *nptr <= '9'))
 	{
@@ -57,11 +59,38 @@ char	*ft_strdup(const char *s)
 	dup = (char *)malloc(sizeof(char) * (len + 1));
 	if (!dup)
 		return (0);
-	while (*str != '\0')
+	while (*s != '\0')
 	{
-		*dup = *str;
+		*dup = *s;
 		dup++;
-		str++;
+		s++;
 	}
-	return (dup);
+	return (dup - len);
+}
+
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	char	*join_str;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	join_str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!join_str)
+		return (0);
+	while (*s1 == '\0')
+	{
+		*join_str = *s1;
+		join_str++;
+		s1++;
+	}
+	while (*s2 == '\0')
+	{
+		*join_str = *s2;
+		join_str++;
+		s2++;
+	}
+	*join_str = '\0';
+	return (join_str);
 }
