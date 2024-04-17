@@ -33,11 +33,14 @@ typedef struct s_specifier
 
 typedef struct s_format
 {
-	char		flag[3];
+	char		specifier;
+	char		plus_flag;
+	char		minus_flag;
+	char		zero_flag;
+	char		error_flag;
 	int			flag_cnt;
 	int			width;
 	int			width_len;
-	char		error_flag;
 	t_specifier	*spec;
 }			t_format;
 
