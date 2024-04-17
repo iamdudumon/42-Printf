@@ -49,7 +49,10 @@ static int	print_format(char **str, va_list args)
 	if (format.error_flag == 1)
 		return (-1);
 	(*str) += format.flag_cnt + format.width_len + 1;
-	res =  format.flag_cnt + format.width_len + format.spec->len;
+	res =  format.width;
+	if (format.width - format.spec->len - format.flag_cnt <= 0)
+		res = format.flag_cnt + format.spec->len;
+	print_width(format.width - format.spec->len - format.flag_cnt, format.zero_flag);
 	if ((format.specifier == 'd' || format.specifier == 'i') \
 			&& format.plus_flag == 1)
 		write(1, "+", 1);
@@ -129,7 +132,12 @@ int main(){
 	// n1 = ft_printf("%c%c%c%", '\0', 1, 0);
 	// n2 = printf("%c%c%c%", '\0', 1, 0);
 
-	n1 = ft_printf("%+d\n", 2147483647);
-	n2 = printf("%+d\n", 2147483647);
+	// n1 = ft_printf("%+d\n", 2147483647);
+	// n2 = printf("%+d\n", 2147483647);
+
+	n1 = ft_printf("%+6d\n", 12345678);
+	n2 = printf("%+6d\n", 12345678);
+
+
     printf("%d %d\n", n1, n2);
 }

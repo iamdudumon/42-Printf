@@ -33,6 +33,8 @@ void    print_width(int width, int zero_flag)
 {
     char    ch;
 
+    if (width <= 0)
+        return ;
     ch = ' ';
     if (zero_flag)
         ch = '0';
@@ -64,12 +66,12 @@ t_format    make_format(const char *str, va_list args)
         str++;
     }
     format.flag_cnt = format.plus_flag + format.minus_flag + format.zero_flag;
-    while ('0' <= *str && *str <= '0')
+    while ('0' <= *str && *str <= '9')
     {
         format.width_len++;
         str++;
     }
-    format.width = ft_atoi(str - format.width_len, format.width_len);
+    format.width = ft_atoi(str - format.width_len, format.width_len);/*  */
     format.spec = set_specifier(*str, args);
     format.specifier = *str;
     if (!format.spec)
