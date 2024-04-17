@@ -65,32 +65,33 @@ char	*ft_strdup(const char *s)
 		dup++;
 		s++;
 	}
+	*dup = *s;
 	return (dup - len);
 }
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*join_str;
-	size_t	s1_len;
-	size_t	s2_len;
+	int		s1_len;
+	int		s2_len;
 
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	join_str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
 	if (!join_str)
 		return (0);
-	while (*s1 == '\0')
+	while (*s1 != '\0')
 	{
 		*join_str = *s1;
 		join_str++;
 		s1++;
 	}
-	while (*s2 == '\0')
+	while (*s2 != '\0')
 	{
 		*join_str = *s2;
 		join_str++;
 		s2++;
 	}
 	*join_str = '\0';
-	return (join_str);
+	return (join_str - (s1_len + s2_len));
 }
