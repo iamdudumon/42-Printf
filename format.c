@@ -47,14 +47,23 @@ t_format    make_format(const char *str, va_list args)
 {
     t_format    format;
 
+    format.plus_flag = 0;
+    format.minus_flag = 0;
+    format.zero_flag = 0;
     format.flag_cnt = 0;
     format.width_len = 0;
     format.error_flag = 0;
-    while (*str == '-' || *str == '+' || *str == '0')
+    while (*str == '+' || *str == '-' || *str == '0')
     {
-        format.flag[format.flag_cnt++] = *str;
+        if (*str == '+')
+            format.plus_flag = 1;
+        if (*str == '-')
+            format.minus_flag = 1;
+        if (*str == '0')
+            format.zero_flag = 1;
         str++;
     }
+    format.flag_cnt = format.plus_flag + format.minus_flag + format.zero_flag;
     while ('0' <= *str && *str <= '0')
     {
         format.width_len++;
@@ -62,6 +71,7 @@ t_format    make_format(const char *str, va_list args)
     }
     format.width = ft_atoi(str - format.width_len, format.width_len);
     format.spec = set_specifier(*str, args);
+    format.specifier = *str;
     if (!format.spec)
         format.error_flag = 1;
     return (format);

@@ -49,7 +49,10 @@ static int	print_format(char **str, va_list args)
 	if (format.error_flag == 1)
 		return (-1);
 	(*str) += format.flag_cnt + format.width_len + 1;
-	res = format.spec->len;
+	res =  format.flag_cnt + format.width_len + format.spec->len;
+	if ((format.specifier == 'd' || format.specifier == 'i') \
+			&& format.plus_flag == 1)
+		write(1, "+", 1);
 	write(1, format.spec->str, format.spec->len);
 	free(format.spec->str);
 	free(format.spec);
@@ -98,8 +101,8 @@ int main(){
     // ft_printf("%%\n", -2);
     // printf("%%\n", -2);
 
-    // ft_printf("%p\n", -1);
-    // printf("%p\n", -1);
+    // ft_printf("%p\n", &n1);
+    // printf("%p\n", &n1);
 
     // ft_printf("%s\n", 0);
     // printf("%s\n", 0);
@@ -107,10 +110,8 @@ int main(){
     // n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
     // n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
 
-
     // n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
     // n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
-
 
     // ft_printf("%s\t\t---%p\n", 0, 0);
     // printf("%s\t\t---%p\n", 0, 0);
@@ -125,7 +126,10 @@ int main(){
 	// int n = ft_printf("hihih %      ");
 	// printf("res: %d\n", n);
 
-	n1 = ft_printf("%c%c%c ", 0, 1, 0);
-	n2 = printf("%c%c%c ", 0, 1, 0);
+	// n1 = ft_printf("%c%c%c%", '\0', 1, 0);
+	// n2 = printf("%c%c%c%", '\0', 1, 0);
+
+	n1 = ft_printf("%+d\n", 2147483647);
+	n2 = printf("%+d\n", 2147483647);
     printf("%d %d\n", n1, n2);
 }
