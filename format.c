@@ -12,50 +12,29 @@
 
 #include "ft_printf.h"
 
-t_format    make_format(const char *str)
+t_specifier *set_specifier(char type, va_list args)
 {
-    t_format    format;
-    int         width_len;
-    
-    format.flag_cnt = 0;
-    while (*str == "-" || *str == '+' || *str == '0')
-    {
-        format.flag[format.flag_cnt++] = *str;
-        *str++;
-    }
-    width_len = 0;
-    while ('0' <= *str && *str <= '0')
-        width_len++;
-    format.width = ft_atoi(*str, width_len);
-    str += width_len;
-    set_specifier(str, &(format.spec), *str);
-    return (format);
-}
-
-void	set_specifier(const char *str, t_type *spec, char type)
-{
-	if (type == '\0')
-        spec->len = 0;
     if (type == 'c')
-		spec = ft_putchar(va_arg(args, int));
+		return ft_putchar(va_arg(args, int));
 	if (type == 's')
-		spec = ft_putstr(va_arg(args, char *));
+		return ft_putstr(va_arg(args, char *));
 	if (type == 'd' || type == 'i' || type == 'u')
-		spec = ft_putnbr(va_arg(args, int), type != 'u');
+		return ft_putnbr(va_arg(args, int), type != 'u');
 	if (type == 'p')
-		spec = ft_putaddr(va_arg(args, void *));
+		return ft_putaddr(va_arg(args, void *));
 	if (type == 'X' || type == 'x')
-		spec = ft_puthex(va_arg(args, unsigned int), type == 'x', 0);
+		return ft_puthex(va_arg(args, unsigned int), type == 'x', 0);
 	if (type == '%')
-		spec = ft_putchar('%');
-	if (*(str + 1) != '\0')
-		spec = ft_putchar('%');
+		return ft_putchar('%');
+    return (0);
 }
 
 void    print_width(int width, int zero_flag)
 {
     char    ch;
 
+    if (width <= 0)
+        return ;
     ch = ' ';
     if (zero_flag)
         ch = '0';
@@ -64,4 +43,38 @@ void    print_width(int width, int zero_flag)
         write(1, &ch, 1);
         width--;
     }
+}
+
+t_format    make_format(const char *str, va_list args)
+{
+    t_format    format;
+
+    format.plus_flag = 0;
+    format.minus_flag = 0;
+    format.zero_flag = 0;
+    format.flag_cnt = 0;
+    format.width_len = 0;
+    format.error_flag = 0;
+    while (*str == '+' || *str == '-' || *str == '0')
+    {
+        if (*str == '+')
+            format.plus_flag = 1;
+        if (*str == '-')
+            format.minus_flag = 1;
+        if (*str == '0')
+            format.zero_flag = 1;
+        str++;
+    }
+    format.flag_cnt = format.plus_flag + format.minus_flag + format.zero_flag;
+    while ('0' <= *str && *str <= '9')
+    {
+        format.width_len++;
+        str++;
+    }
+    format.width = ft_atoi(str - format.width_len, format.width_len);/*  */
+    format.spec = set_specifier(*str, args);
+    format.specifier = *str;
+    if (!format.spec)
+        format.error_flag = 1;
+    return (format);
 }

@@ -30,7 +30,6 @@ t_specifier	*ft_putchar(const char ch)
 t_specifier	*ft_putstr(const char *str)
 {
 	t_specifier	*spec;
-	size_t		len;
 
 	spec = (t_specifier *)malloc(sizeof(t_specifier));
 	if (!spec)
@@ -79,38 +78,53 @@ t_specifier	*ft_putnbr(int n, int sign_flag)
 	return (spec);
 }
 
-int	ft_puthex(unsigned long n, int case_flag, int addr_flag)
+t_specifier	*ft_puthex(unsigned long n, int case_flag, int addr_flag)
 {
+	t_specifier	*spec;
 	char	*hex;
-	char	str[16];
-	size_t	i;
+	char	str[17];
 	int		size;
 
+	spec = (t_specifier *)malloc(sizeof(t_specifier));
+	if (!spec)
+		return (0);
+	spec->len = 0;
 	hex = "0123456789ABCDEF";
 	if (case_flag)
 		hex = "0123456789abcdef";
 	size = 8;
 	if (addr_flag)
 		size = 16;
-	i = 0;
+	str[size] = '\0';
 	while (1)
 	{
-		str[size - 1 - i++] = hex[n % 16];
+		str[size - 1 - spec->len++] = hex[n % 16];
 		n = n / 16;
 		if (n == 0)
 			break ;
 	}
-	write(1, str + size - i, i);
-	return (i);
+	spec->str = ft_strdup(str + size - spec->len);
+	return (spec);
 }
 
-int	ft_putaddr(const void *addr)
+t_specifier	*ft_putaddr(const void *addr)
 {
+	t_specifier	*spec;
+	t_specifier	*tmp;
+
+	spec = (t_specifier *)malloc(sizeof(t_specifier));
+	if (!spec)
+		return (0);
 	if (!addr)
 	{
-		ft_putstr("(nil)");
-		return (5);
+		spec->str = ft_strdup("(nil)");
+		spec->len = 5;
+		return (spec);
 	}
-	write(1, "0x", 2);
-	return (ft_puthex((unsigned long)addr, 1, 1) + 2);
+	tmp = ft_puthex((unsigned long)addr, 1, 1);
+	spec->str = ft_strjoin("0x", tmp->str);
+	spec->len = 2 + tmp->len;
+	free(tmp->str);
+	free(tmp);
+	return (spec);
 }
