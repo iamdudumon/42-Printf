@@ -12,19 +12,30 @@
 
 #include "ft_printf.h"
 
-static void cal_order_width_or_sign(t_format format)
+static void print_final_format(t_format format)
 {
-	if (format.plus_flag == 0)
-		print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
-	if (format.plus_flag == 1 && format.zero_flag == 1)
+	if (!format.minus_flag)
 	{
-		write(1, "+", 1);
-		print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+		if (format.plus_flag == 0)
+			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+		if (format.plus_flag == 1 && format.zero_flag == 1)
+		{
+			write(1, "+", 1);
+			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+		}
+		if (format.plus_flag == 1 && format.zero_flag == 0)
+		{
+			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+			write(1, "+", 1);
+		}
+		write(1, format.spec->str, format.spec->len);
 	}
-	if (format.plus_flag == 1 && format.zero_flag == 0)
+	if (format.minus_flag)
 	{
-		print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
-		write(1, "+", 1);
+		if (format.plus_flag == 1)
+			write(1, "+", 1);
+		write(1, format.spec->str, format.spec->len);
+		print_width(format.width - format.spec->len - format.plus_flag, 0);
 	}
 }
 static int print_format(char **str, va_list args, int *res)
@@ -37,11 +48,11 @@ static int print_format(char **str, va_list args, int *res)
 	if (format.error_flag == 1)
 		return (0);
 	(*str) += format.flag_cnt + format.width_len + 1;
-	*res = format.width;
 	if (format.width - format.spec->len - format.plus_flag <= 0)
-		*res = format.plus_flag + format.spec->len;
-	cal_order_width_or_sign(format);
-	write(1, format.spec->str, format.spec->len);
+		*res += format.plus_flag + format.spec->len;
+	else
+		*res += format.width;
+	print_final_format(format);
 	free(format.spec->str);
 	free(format.spec);
 	return (1);
@@ -118,8 +129,11 @@ int main()
 	// n1 = ft_printf("%+d\n", 2147483647);
 	// n2 = printf("%+d\n", 2147483647);
 
-	n1 = ft_printf("%+d\n", 12345678012345678);
-	n2 = printf("%+d\n", 12345678012345678);
+	// n1 = ft_printf("%-d\n", 1234);
+	// n2 = printf("%-d\n", 1234);
 
-	printf("%d %d\n", n1, n2);
+	// printf("%d %d\n", n1, n2);
+
+	int n = ft_printf("%--c", 'a');
+	printf("\n%d\n", n);
 }
