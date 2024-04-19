@@ -46,6 +46,9 @@ typedef struct s_format
 
 int ft_printf(const char *str, ...);
 
+void clean_buffer(t_buffer *buf, int *res);
+void store_buffer(t_buffer *buf, int *res, char ch);
+
 t_specifier *ft_putchar(const char ch);
 t_specifier *ft_putstr(const char *str);
 t_specifier *ft_putnbr(int n, int sign_flag);

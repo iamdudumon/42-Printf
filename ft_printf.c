@@ -12,77 +12,59 @@
 
 #include "ft_printf.h"
 
-static void	clean_buffer(t_buffer *buf, int *res)
+static void cal_order_width_or_sign(t_format format)
 {
-	if (buf->len > 0)
+	if (format.plus_flag == 0)
+		print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+	if (format.plus_flag == 1 && format.zero_flag == 1)
 	{
-		write(1, buf->content, buf->len);
-		*res += buf->len;
-		buf->len = 0;
+		write(1, "+", 1);
+		print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+	}
+	if (format.plus_flag == 1 && format.zero_flag == 0)
+	{
+		print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+		write(1, "+", 1);
 	}
 }
-
-static void	store_buffer(t_buffer *buf, int *res, char ch)
+static int print_format(char **str, va_list args, int *res)
 {
-	if (buf->len == BUFFER_SIZE)
-		clean_buffer(buf, res);
-	buf->content[buf->len] = ch;
-	buf->content[buf->len + 1] = '\0';
-	(buf->len)++;
-}
-
-static void	init_val(t_buffer *buf, int *res, int *error_flag)
-{
-	buf->len = 0;
-	*res = 0;
-	*error_flag = 1;
-}
-
-static int	print_format(char **str, va_list args)
-{
-	t_format	format;
-	int			res;
+	t_format format;
 
 	if (**str == '\0')
 		return (-1);
 	format = make_format(*str, args);
 	if (format.error_flag == 1)
-		return (-1);
+		return (0);
 	(*str) += format.flag_cnt + format.width_len + 1;
-	res =  format.width;
-	if (format.width - format.spec->len - format.flag_cnt <= 0)
-		res = format.flag_cnt + format.spec->len;
-	print_width(format.width - format.spec->len - format.flag_cnt, format.zero_flag);
-	if ((format.specifier == 'd' || format.specifier == 'i') \
-			&& format.plus_flag == 1)
-		write(1, "+", 1);
+	*res = format.width;
+	if (format.width - format.spec->len - format.plus_flag <= 0)
+		*res = format.plus_flag + format.spec->len;
+	cal_order_width_or_sign(format);
 	write(1, format.spec->str, format.spec->len);
 	free(format.spec->str);
 	free(format.spec);
-	return (res);
-	
+	return (1);
 }
 
-int	ft_printf(const char *str, ...)
+int ft_printf(const char *str, ...)
 {
-	va_list		args;
-	t_buffer	buf;
-	int			res;
-	int			error_flag;
+	va_list args;
+	t_buffer buf;
+	int res;
 
 	va_start(args, str);
-	init_val(&buf, &res, &error_flag);
+	buf.len = 0;
+	res = 0;
 	while (*str != '\0')
 	{
 		if (*str == '%')
 		{
 			clean_buffer(&buf, &res);
 			str++;
-			error_flag = print_format((char **)&str, args);
-			if (error_flag == -1)
+			if (!print_format((char **)&str, args, &res))
 				return (-1);
-			res += error_flag;
-			continue ;
+			continue;
 		}
 		store_buffer(&buf, &res, *str);
 		str++;
@@ -92,39 +74,40 @@ int	ft_printf(const char *str, ...)
 }
 
 #include <stdio.h>
-int main(){
-    int n1, n2;
+int main()
+{
+	int n1, n2;
 
-    // n1= ft_printf("%d\n", 0);
-    // n2 = printf("%d\n", 0);
+	// n1= ft_printf("%d\n", 0);
+	// n2 = printf("%d\n", 0);
 
-    // n1= ft_printf("%u\n", 2147483648 + 2147483648 - 1);
-    // n2 = printf("%u\n", 2147483648 + 2147483648 - 1);
+	// n1= ft_printf("%u\n", 2147483648 + 2147483648 - 1);
+	// n2 = printf("%u\n", 2147483648 + 2147483648 - 1);
 
-    // ft_printf("%%\n", -2);
-    // printf("%%\n", -2);
+	// ft_printf("%%\n", -2);
+	// printf("%%\n", -2);
 
-    // ft_printf("%p\n", &n1);
-    // printf("%p\n", &n1);
+	// ft_printf("%p\n", &n1);
+	// printf("%p\n", &n1);
 
-    // ft_printf("%s\n", 0);
-    // printf("%s\n", 0);
+	// ft_printf("%s\n", 0);
+	// printf("%s\n", 0);
 
-    // n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
-    // n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
+	// n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
+	// n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
 
-    // n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
-    // n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+	// n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+	// n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
 
-    // ft_printf("%s\t\t---%p\n", 0, 0);
-    // printf("%s\t\t---%p\n", 0, 0);
+	// ft_printf("%s\t\t---%p\n", 0, 0);
+	// printf("%s\t\t---%p\n", 0, 0);
 
-    // ft_printf("%x %X\n", 23408230948230, -111);
-    // printf("%x %X\n", 23408230948230, -111);
+	// ft_printf("%x %X\n", 23408230948230, -111);
+	// printf("%x %X\n", 23408230948230, -111);
 
-    // n1 = ft_printf("%d %z", 5, 5);
-    // printf("%d\n", n1);
-    // n2 = printf("%d %z", 5, 5);
+	// n1 = ft_printf("%d %z", 5, 5);
+	// printf("%d\n", n1);
+	// n2 = printf("%d %z", 5, 5);
 
 	// int n = ft_printf("hihih %      ");
 	// printf("res: %d\n", n);
@@ -135,9 +118,8 @@ int main(){
 	// n1 = ft_printf("%+d\n", 2147483647);
 	// n2 = printf("%+d\n", 2147483647);
 
-	n1 = ft_printf("%+6d\n", 12345678);
-	n2 = printf("%+6d\n", 12345678);
+	n1 = ft_printf("%+d\n", 12345678012345678);
+	n2 = printf("%+d\n", 12345678012345678);
 
-
-    printf("%d %d\n", n1, n2);
+	printf("%d %d\n", n1, n2);
 }

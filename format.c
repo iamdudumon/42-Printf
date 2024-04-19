@@ -15,26 +15,26 @@
 t_specifier *set_specifier(char type, va_list args)
 {
     if (type == 'c')
-		return ft_putchar(va_arg(args, int));
-	if (type == 's')
-		return ft_putstr(va_arg(args, char *));
-	if (type == 'd' || type == 'i' || type == 'u')
-		return ft_putnbr(va_arg(args, int), type != 'u');
-	if (type == 'p')
-		return ft_putaddr(va_arg(args, void *));
-	if (type == 'X' || type == 'x')
-		return ft_puthex(va_arg(args, unsigned int), type == 'x', 0);
-	if (type == '%')
-		return ft_putchar('%');
+        return ft_putchar(va_arg(args, int));
+    if (type == 's')
+        return ft_putstr(va_arg(args, char *));
+    if (type == 'd' || type == 'i' || type == 'u')
+        return ft_putnbr(va_arg(args, int), type != 'u');
+    if (type == 'p')
+        return ft_putaddr(va_arg(args, void *));
+    if (type == 'X' || type == 'x')
+        return ft_puthex(va_arg(args, unsigned int), type == 'x', 0);
+    if (type == '%')
+        return ft_putchar('%');
     return (0);
 }
 
-void    print_width(int width, int zero_flag)
+void print_width(int width, int zero_flag)
 {
-    char    ch;
+    char ch;
 
     if (width <= 0)
-        return ;
+        return;
     ch = ' ';
     if (zero_flag)
         ch = '0';
@@ -45,9 +45,9 @@ void    print_width(int width, int zero_flag)
     }
 }
 
-t_format    make_format(const char *str, va_list args)
+t_format make_format(const char *str, va_list args)
 {
-    t_format    format;
+    t_format format;
 
     format.plus_flag = 0;
     format.minus_flag = 0;
@@ -71,7 +71,7 @@ t_format    make_format(const char *str, va_list args)
         format.width_len++;
         str++;
     }
-    format.width = ft_atoi(str - format.width_len, format.width_len);/*  */
+    format.width = ft_atoi(str - format.width_len, format.width_len); /*  */
     format.spec = set_specifier(*str, args);
     format.specifier = *str;
     if (!format.spec)
