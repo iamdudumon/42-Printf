@@ -13,7 +13,7 @@
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 NAME	=	libftprintf.a
-SRC		= 	ft_printf.c print_type.c print_utils.c format.c
+SRC		= 	ft_printf.c print_type.c print_utils.c format.c buffer_utils.c
 OBJS	=	$(SRC:.c=.o)
 
 # ifdef BONUS
