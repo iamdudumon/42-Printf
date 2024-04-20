@@ -28,6 +28,7 @@ typedef struct s_buffer
 typedef struct s_specifier
 {
 	char		*str;
+	char		sign_ch;
 	int			len;
 }				t_specifier;
 
@@ -38,7 +39,6 @@ typedef struct s_format
 	char		minus_flag;
 	char		zero_flag;
 	char		error_flag;
-	char		sign_ch;
 	int			width;
 	int			size;
 	t_specifier	*spec;
