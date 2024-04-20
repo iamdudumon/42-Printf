@@ -58,11 +58,11 @@ t_format make_format(const char *str, va_list args)
     while (*str == '+' || *str == '-' || *str == '0')
     {
         if (*str == '+')
-            format.plus_flag = 1;
+            format.plus_flag++;
         if (*str == '-')
-            format.minus_flag = 1;
+            format.minus_flag++;
         if (*str == '0')
-            format.zero_flag = 1;
+            format.zero_flag++;
         str++;
     }
     format.flag_cnt = format.plus_flag + format.minus_flag + format.zero_flag;

@@ -18,12 +18,12 @@ static void print_final_format(t_format format)
 	{
 		if (format.plus_flag == 0)
 			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
-		if (format.plus_flag == 1 && format.zero_flag == 1)
+		if (format.plus_flag && format.zero_flag)
 		{
 			write(1, "+", 1);
 			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
 		}
-		if (format.plus_flag == 1 && format.zero_flag == 0)
+		if (format.plus_flag && format.zero_flag == 0)
 		{
 			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
 			write(1, "+", 1);
@@ -32,7 +32,7 @@ static void print_final_format(t_format format)
 	}
 	if (format.minus_flag)
 	{
-		if (format.plus_flag == 1)
+		if (format.plus_flag)
 			write(1, "+", 1);
 		write(1, format.spec->str, format.spec->len);
 		print_width(format.width - format.spec->len - format.plus_flag, 0);
@@ -84,56 +84,56 @@ int ft_printf(const char *str, ...)
 	return (res);
 }
 
-#include <stdio.h>
-int main()
-{
-	int n1, n2;
+// #include <stdio.h>
+// int main()
+// {
+// 	int n1, n2;
 
-	// n1= ft_printf("%d\n", 0);
-	// n2 = printf("%d\n", 0);
+// 	// n1= ft_printf("%d\n", 0);
+// 	// n2 = printf("%d\n", 0);
 
-	// n1= ft_printf("%u\n", 2147483648 + 2147483648 - 1);
-	// n2 = printf("%u\n", 2147483648 + 2147483648 - 1);
+// 	// n1= ft_printf("%u\n", 2147483648 + 2147483648 - 1);
+// 	// n2 = printf("%u\n", 2147483648 + 2147483648 - 1);
 
-	// ft_printf("%%\n", -2);
-	// printf("%%\n", -2);
+// 	// ft_printf("%%\n", -2);
+// 	// printf("%%\n", -2);
 
-	// ft_printf("%p\n", &n1);
-	// printf("%p\n", &n1);
+// 	// ft_printf("%p\n", &n1);
+// 	// printf("%p\n", &n1);
 
-	// ft_printf("%s\n", 0);
-	// printf("%s\n", 0);
+// 	// ft_printf("%s\n", 0);
+// 	// printf("%s\n", 0);
 
-	// n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
-	// n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
+// 	// n1 = printf("123456789012345678901234567890123456789012345678901234567980\n");
+// 	// n2 = ft_printf("123456789012345678901234567890123456789012345678901234567980\n");
 
-	// n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
-	// n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+// 	// n1 = ft_printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
+// 	// n2 = printf("myname is %s\nmy age: %d, my sex: %c\n", "dukim", 25, 'm');
 
-	// ft_printf("%s\t\t---%p\n", 0, 0);
-	// printf("%s\t\t---%p\n", 0, 0);
+// 	// ft_printf("%s\t\t---%p\n", 0, 0);
+// 	// printf("%s\t\t---%p\n", 0, 0);
 
-	// ft_printf("%x %X\n", 23408230948230, -111);
-	// printf("%x %X\n", 23408230948230, -111);
+// 	// ft_printf("%x %X\n", 23408230948230, -111);
+// 	// printf("%x %X\n", 23408230948230, -111);
 
-	// n1 = ft_printf("%d %z", 5, 5);
-	// printf("%d\n", n1);
-	// n2 = printf("%d %z", 5, 5);
+// 	// n1 = ft_printf("%d %z", 5, 5);
+// 	// printf("%d\n", n1);
+// 	// n2 = printf("%d %z", 5, 5);
 
-	// int n = ft_printf("hihih %      ");
-	// printf("res: %d\n", n);
+// 	// int n = ft_printf("hihih %      ");
+// 	// printf("res: %d\n", n);
 
-	// n1 = ft_printf("%c%c%c%", '\0', 1, 0);
-	// n2 = printf("%c%c%c%", '\0', 1, 0);
+// 	// n1 = ft_printf("%c%c%c%", '\0', 1, 0);
+// 	// n2 = printf("%c%c%c%", '\0', 1, 0);
 
-	// n1 = ft_printf("%+d\n", 2147483647);
-	// n2 = printf("%+d\n", 2147483647);
+// 	// n1 = ft_printf("%+d\n", 2147483647);
+// 	// n2 = printf("%+d\n", 2147483647);
 
-	// n1 = ft_printf("%-d\n", 1234);
-	// n2 = printf("%-d\n", 1234);
+// 	// n1 = ft_printf("%-d\n", 1234);
+// 	// n2 = printf("%-d\n", 1234);
 
-	// printf("%d %d\n", n1, n2);
+// 	// printf("%d %d\n", n1, n2);
 
-	int n = ft_printf("%--c", 'a');
-	printf("\n%d\n", n);
-}
+// 	int n = ft_printf("%---------+c", 'a');
+// 	printf("\n%d\n", n);
+// }
