@@ -40,7 +40,7 @@ static int print_format(char **str, va_list args, int *res)
 	format = make_format(*str, args);
 	if (format.error_flag == 1)
 		return (0);
-	*str += format.flag_cnt + format.width_len + 1;
+	*str += format.size + 1;
 	if (format.width - format.spec->len - (format.plus_flag != 0) <= 0)
 		*res += (format.plus_flag != 0) + format.spec->len;
 	else

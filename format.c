@@ -58,8 +58,10 @@ void print_width(int width, int zero_flag)
 t_format make_format(const char *str, va_list args)
 {
     t_format format;
+    int width_len;
 
     ft_memset(&format, 0, sizeof(t_format));
+    width_len = 0;
     while (*str == '+' || *str == '-' || *str == '0')
     {
         if (*str == '+')
@@ -68,15 +70,16 @@ t_format make_format(const char *str, va_list args)
             format.minus_flag++;
         if (*str == '0')
             format.zero_flag++;
+        format.size++;
         str++;
     }
-    format.flag_cnt = format.plus_flag + format.minus_flag + format.zero_flag;
     while ('0' <= *str && *str <= '9')
     {
-        format.width_len++;
+        width_len++;
+        format.size++;
         str++;
     }
-    format.width = ft_atoi(str - format.width_len, format.width_len);
+    format.width = ft_atoi(str - width_len, width_len);
     format.spec = set_specifier(*str, args);
     format.specifier = *str;
     set_flag(&format);
