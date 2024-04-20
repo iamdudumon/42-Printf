@@ -64,7 +64,6 @@ t_specifier	*ft_putnbr(int n, int sign_flag)
 	{
 		un = -n;
 		spec->sign_ch = '-';
-		// nbr[spec->len++] = '-';
 	}
 	else if (!sign_flag && n < 0)
 		un = n + 2147483648 * 2;
