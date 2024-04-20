@@ -52,20 +52,11 @@ int			ft_printf(const char *str, ...);
 void		clean_buffer(t_buffer *buf, int *res);
 void		store_buffer(t_buffer *buf, int *res, char ch);
 
-t_specifier	*ft_putchar(const char ch);
-// t_specifier *ft_putstr(const char *str);
-t_specifier *ft_putnbr(int n, int sign_flag);
-t_specifier *ft_putaddr(const void *addr);
-t_specifier *ft_puthex(unsigned long n, int case_flag, int addr_flag);
-
-t_specifier	ft_putstr(t_format format, const char *str);
-
-int			pow_ten(unsigned int un);
-// int			ft_strlen(const char *str);
-// int			ft_atoi(const char *nptr, int len);
-// char		*ft_strdup(const char *s);
-// char		*ft_strjoin(const char *s1, const char *s2);
-// void		*ft_memset(void *s, int c, size_t n);
+t_specifier	ft_putchar(const char ch);
+t_specifier	ft_putstr(t_format *format, const char *str);
+t_specifier	ft_putnbr(t_format *format, int n, int sign_flag);
+t_specifier	ft_puthex(t_format *format, unsigned long n, int case_flag, int addr_flag);
+t_specifier	ft_putaddr(t_format *format, const void *addr);
 
 t_format	make_format(const char *str, va_list args);
 
