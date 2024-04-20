@@ -39,6 +39,8 @@ typedef struct s_format
 	char		plus_flag;
 	char		minus_flag;
 	char		zero_flag;
+	char		sharp_flag;
+	char		blank_flag;
 	char		precision_flag;
 	char		error_flag;
 	int			width;
@@ -55,7 +57,7 @@ void		store_buffer(t_buffer *buf, int *res, char ch);
 t_specifier	ft_putchar(const char ch);
 t_specifier	ft_putstr(t_format *format, const char *str);
 t_specifier	ft_putnbr(t_format *format, int n, int sign_flag);
-t_specifier	ft_puthex(t_format *format, unsigned long n, int case_flag, int addr_flag);
+t_specifier	ft_puthex(t_format *format, unsigned long n, char case_flag, char addr_flag);
 t_specifier	ft_putaddr(t_format *format, const void *addr);
 
 t_format	make_format(const char *str, va_list args);

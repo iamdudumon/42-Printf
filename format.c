@@ -52,14 +52,18 @@ t_format make_format(const char *str, va_list args)
     ft_memset(&format, 0, sizeof(t_format));
     width_len = 0;
     precision_len = 0;
-    while (*str == '+' || *str == '-' || *str == '0')
+    while (*str == '+' || *str == '-' || *str == '0' || *str == '#' || *str == ' ')
     {
         if (*str == '+')
-            format.plus_flag++;
+            format.plus_flag = 1;
         if (*str == '-')
-            format.minus_flag++;
+            format.minus_flag = 1;
         if (*str == '0')
-            format.zero_flag++;
+            format.zero_flag = 1;
+        if (*str == '#')
+            format.sharp_flag = 1;
+        if (*str == ' ')
+            format.blank_flag = 1;
         format.size++;
         str++;
     }
@@ -74,7 +78,7 @@ t_format make_format(const char *str, va_list args)
     {
         str++;
         format.size++;
-        format.precision_flag++;
+        format.precision_flag = 1;
         while ('0' <= *str && *str <= '9')
         {
             precision_len++;
