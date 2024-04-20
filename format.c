@@ -52,7 +52,7 @@ void print_width(int width, int zero_flag)
         ch = '0';
     ft_memset(buffer, ch, width);
     write(1, buffer, width);
-    
+    free(buffer);
 }
 
 t_format make_format(const char *str, va_list args)
