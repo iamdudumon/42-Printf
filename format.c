@@ -71,7 +71,7 @@ t_format make_format(const char *str, va_list args)
         format.width_len++;
         str++;
     }
-    format.width = ft_atoi(str - format.width_len, format.width_len); /*  */
+    format.width = ft_atoi(str - format.width_len, format.width_len);
     format.spec = set_specifier(*str, args);
     format.specifier = *str;
     if (!format.spec)
