@@ -60,6 +60,7 @@ int ft_strlen(const char *str);
 int ft_atoi(const char *nptr, int len);
 char *ft_strdup(const char *s);
 char *ft_strjoin(const char *s1, const char *s2);
+void	*ft_memset(void *s, int c, size_t n);
 
 t_format make_format(const char *str, va_list args);
 void print_width(int width, int zero_flag);

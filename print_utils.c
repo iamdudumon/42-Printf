@@ -95,3 +95,21 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	*join_str = '\0';
 	return (join_str - (s1_len + s2_len));
 }
+
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned char	*convert_s;
+	unsigned char	convert_c;
+	size_t			size;
+
+	convert_s = (unsigned char *)s;
+	convert_c = (unsigned char)c;
+	size = 0;
+	while (size < n)
+	{
+		convert_s[size] = convert_c;
+		size++;
+	}
+	return ((void *)convert_s);
+}
