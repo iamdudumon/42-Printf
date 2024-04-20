@@ -12,6 +12,16 @@
 
 #include "ft_printf.h"
 
+static void set_flag(t_format *format)
+{
+    if (!format->spec)
+        format->error_flag = 1;
+    if (format->plus_flag && (format->specifier != 'd' && format->specifier != 'i'))
+        format->plus_flag = 0;
+    if (format->zero_flag && format->minus_flag)
+        format->zero_flag= 0;
+}
+
 t_specifier *set_specifier(char type, va_list args)
 {
     if (type == 'c')
@@ -31,30 +41,25 @@ t_specifier *set_specifier(char type, va_list args)
 
 void print_width(int width, int zero_flag)
 {
-    char ch;
+    char    *buffer;
+    char    ch;
 
     if (width <= 0)
         return;
+    buffer = (char *)malloc(sizeof(char) * width);
     ch = ' ';
     if (zero_flag)
         ch = '0';
-    while (width > 0)
-    {
-        write(1, &ch, 1);
-        width--;
-    }
+    ft_memset(buffer, ch, width);
+    write(1, buffer, width);
+    
 }
 
 t_format make_format(const char *str, va_list args)
 {
     t_format format;
 
-    format.plus_flag = 0;
-    format.minus_flag = 0;
-    format.zero_flag = 0;
-    format.flag_cnt = 0;
-    format.width_len = 0;
-    format.error_flag = 0;
+    ft_memset(&format, 0, sizeof(t_format));
     while (*str == '+' || *str == '-' || *str == '0')
     {
         if (*str == '+')
@@ -74,7 +79,6 @@ t_format make_format(const char *str, va_list args)
     format.width = ft_atoi(str - format.width_len, format.width_len);
     format.spec = set_specifier(*str, args);
     format.specifier = *str;
-    if (!format.spec)
-        format.error_flag = 1;
+    set_flag(&format);
     return (format);
 }
