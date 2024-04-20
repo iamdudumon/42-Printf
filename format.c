@@ -16,6 +16,8 @@ static void set_flag(t_format *format)
 {
     if (!format->spec)
         format->error_flag = 1;
+    if (format->spec->sign_ch == '-')
+        format->plus_flag = 1;
     if (format->plus_flag && (format->specifier != 'd' && format->specifier != 'i'))
         format->plus_flag = 0;
     if (format->zero_flag && format->minus_flag)

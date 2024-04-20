@@ -12,21 +12,26 @@
 
 #include "ft_printf.h"
 
+void ft_putch(char ch)
+{
+	write(1, &ch, 1);
+}
+
 static void print_final_format(t_format format)
 {
 	if (!format.minus_flag)
 	{
 		if (format.zero_flag && format.plus_flag)
-			write(1, "+", 1);
+			ft_putch(format.spec->sign_ch);
 		print_width(format.width - format.spec->len - (format.plus_flag != 0), format.zero_flag);
 		if (!format.zero_flag && format.plus_flag)
-			write(1, "+", 1);
+			ft_putch(format.spec->sign_ch);
 		write(1, format.spec->str, format.spec->len);
 	}
 	if (format.minus_flag)
 	{
 		if (format.plus_flag)
-			write(1, "+", 1);
+			ft_putch(format.spec->sign_ch);
 		write(1, format.spec->str, format.spec->len);
 		print_width(format.width - format.spec->len - (format.plus_flag != 0), format.zero_flag);
 	}

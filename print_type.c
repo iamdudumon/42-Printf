@@ -48,7 +48,7 @@ t_specifier	*ft_putstr(const char *str)
 t_specifier	*ft_putnbr(int n, int sign_flag)
 {
 	t_specifier			*spec;
-	char				nbr[12];
+	char				nbr[11];
 	unsigned int		pow;
 	unsigned int		un;
 
@@ -59,10 +59,12 @@ t_specifier	*ft_putnbr(int n, int sign_flag)
 		return (0);
 	spec->len = 0;
 	un = n;
+	spec->sign_ch = '+';
 	if (sign_flag && n < 0)
 	{
 		un = -n;
-		nbr[spec->len++] = '-';
+		spec->sign_ch = '-';
+		// nbr[spec->len++] = '-';
 	}
 	else if (!sign_flag && n < 0)
 		un = n + 2147483648 * 2;
