@@ -16,18 +16,11 @@ static void print_final_format(t_format format)
 {
 	if (!format.minus_flag)
 	{
-		if (format.plus_flag == 0)
-			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
-		if (format.plus_flag && format.zero_flag)
-		{
+		if (format.zero_flag && format.plus_flag)
 			write(1, "+", 1);
-			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
-		}
-		if (format.plus_flag && format.zero_flag == 0)
-		{
-			print_width(format.width - format.spec->len - format.plus_flag, format.zero_flag);
+		print_width(format.width - format.spec->len - (format.plus_flag != 0), format.zero_flag);
+		if (!format.zero_flag && format.plus_flag)
 			write(1, "+", 1);
-		}
 		write(1, format.spec->str, format.spec->len);
 	}
 	if (format.minus_flag)
@@ -35,21 +28,21 @@ static void print_final_format(t_format format)
 		if (format.plus_flag)
 			write(1, "+", 1);
 		write(1, format.spec->str, format.spec->len);
-		print_width(format.width - format.spec->len - format.plus_flag, 0);
+		print_width(format.width - format.spec->len - (format.plus_flag != 0), format.zero_flag);
 	}
 }
 static int print_format(char **str, va_list args, int *res)
 {
-	t_format format;
+	t_format	format;
 
 	if (**str == '\0')
 		return (-1);
 	format = make_format(*str, args);
 	if (format.error_flag == 1)
 		return (0);
-	(*str) += format.flag_cnt + format.width_len + 1;
-	if (format.width - format.spec->len - format.plus_flag <= 0)
-		*res += format.plus_flag + format.spec->len;
+	*str += format.flag_cnt + format.width_len + 1;
+	if (format.width - format.spec->len - (format.plus_flag != 0) <= 0)
+		*res += (format.plus_flag != 0) + format.spec->len;
 	else
 		*res += format.width;
 	print_final_format(format);
