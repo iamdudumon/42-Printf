@@ -10,38 +10,37 @@
 #                                                                              #
 # **************************************************************************** #
 
+NAME	=	libftprintf.a
+LIBFT		= libft
+LIBFT_LIB	= libft.a
+
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
-NAME	=	libftprintf.a
-SRC		= 	ft_printf.c print_type.c print_utils.c format.c buffer_utils.c
-OBJS	=	$(SRC:.c=.o)
 
-# ifdef BONUS
-# 	FINAL_OBJS = $(OBJS) $(LST_OBJS)
-# else
-# 	FINAL_OBJS = $(OBJS)
-# endif
+SRC		= 	ft_printf.c format.c buffer_utils.c spec_char.c spec_str.c spec_nbr.c spec_hex.c spec_addr.c
+OBJS	=	$(SRC:.c=.o)
 
 .PHONY:		all bonus clean fclean re
 
 all		:	$(NAME)
 
-$(NAME)	:	$(OBJS)
-		ar -rc $(NAME) $(OBJS)
+$(NAME) : $(OBJS)
+	make all -C $(LIBFT)/
+	cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
+	ar rc $(NAME) $(OBJS)
 
 $(OBJS)	:	$(SRC)
 	$(CC) $(CFLAGS) -c $(SRC)
-
-# $(LST_OBJS)	:	$(LST_SRC)
-# 	$(CC) $(CFLAGS) -c $(LST_SRC)
 
 bonus:
 	@make BONUS=1 all
 
 clean:
 	@rm -f $(OBJS)
+	make clean -C $(LIBFT)
 
 fclean:		clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(LIBFT_LIB)
+	make fclean -C $(LIBFT)
 
 re:			fclean all
