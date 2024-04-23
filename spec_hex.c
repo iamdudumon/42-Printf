@@ -31,7 +31,7 @@ static char *make_sharp_str(char *str, char case_flag, char sharp_flag)
 {
 	char	*pre;
 
-	if (!sharp_flag)
+	if (!sharp_flag || *str == '0')
 		return (ft_strdup(str));
 	pre = "0x";
 	if (!case_flag)
@@ -83,7 +83,7 @@ t_specifier	ft_puthex(t_format *format, unsigned long n, char case_flag, char ad
 	}
     zero = make_zero_precision(format->precision - (int)ft_strlen(hex_str));
 	temp = ft_strjoin(zero, hex_str);
-    spec.str = make_sharp_str(temp, case_flag, format->sharp_flag);
+	spec.str = make_sharp_str(temp, case_flag, format->sharp_flag);
 	spec.len = ft_strlen(spec.str);
 	free(temp);
     free(zero);
