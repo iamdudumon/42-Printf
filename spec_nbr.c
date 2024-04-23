@@ -73,8 +73,16 @@ t_specifier	ft_putnbr(t_format *format, int n, int sign_flag)
 
 	if (format->precision_flag)
         format->zero_flag = 0;
+	if (format->plus_flag)
+		format->blank_flag = 0;
     spec.sign_ch = '+';
-    if (sign_flag && n < 0)
+	if (sign_flag && n >= 0 && format->blank_flag)
+	{
+		spec.sign_ch = ' ';
+		format->blank_flag= 0;
+		format->plus_flag = 1;
+	}
+	if (sign_flag && n < 0)
         spec.sign_ch = '-';
     nbr = make_nbr_str(n, sign_flag);
 	if (*nbr == '0' && (format->precision_flag && !format->precision))
