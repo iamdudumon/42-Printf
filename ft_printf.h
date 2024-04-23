@@ -6,7 +6,7 @@
 /*   By: dukim <dukim@student.42gyeonsan.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:29:50 by dukim             #+#    #+#             */
-/*   Updated: 2024/04/11 17:47:02 by dukim            ###   ########.fr       */
+/*   Updated: 2024/04/23 15:08:15 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,49 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include "libft/libft.h"
 
 typedef struct s_buffer
 {
-	char	content[BUFFER_SIZE];
-	int		len;
-}			t_buffer;
+	char		content[BUFFER_SIZE];
+	int			len;
+}				t_buffer;
 
-int		ft_printf(const char *str, ...);
+typedef struct s_specifier
+{
+	char		*str;
+	char		sign_ch;
+	int			len;
+}				t_specifier;
 
-int		ft_putchar(const char ch);
-int		ft_putstr(const char *str);
-int		ft_putnbr(int n, int sign_flag);
-int		ft_putaddr(const void *addr);
-int		ft_puthex(unsigned long n, int case_flag, int addr_flag);
+typedef struct s_format
+{
+	char		specifier;
+	char		plus_flag;
+	char		minus_flag;
+	char		zero_flag;
+	char		sharp_flag;
+	char		blank_flag;
+	char		precision_flag;
+	char		error_flag;
+	int			width;
+	int			precision;
+	int			size;
+	t_specifier	spec;
+}				t_format;
 
-int		pow_ten(unsigned int un);
-size_t	ft_strlen(const char *str);
+int			ft_printf(const char *str, ...);
+
+void		clean_buffer(t_buffer *buf, int *res);
+void		store_buffer(t_buffer *buf, int *res, char ch);
+
+t_specifier	ft_putchar(const char ch);
+t_specifier	ft_putstr(t_format *format, const char *str);
+t_specifier	ft_putnbr(t_format *format, int n, int sign_flag);
+t_specifier	ft_puthex(t_format *format, unsigned long n, \
+							char case_flag, char addr_flag);
+t_specifier	ft_putaddr(t_format *format, const void *addr);
+
+t_format	make_format(const char *str, va_list args);
 
 #endif

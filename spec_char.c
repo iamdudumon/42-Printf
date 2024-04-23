@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   spec_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dukim <dukim@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 16:33:59 by dukim             #+#    #+#             */
-/*   Updated: 2024/03/04 18:29:35 by dukim            ###   ########.fr       */
+/*   Created: 2024/04/20 21:33:14 by dukim             #+#    #+#             */
+/*   Updated: 2024/04/23 15:21:40 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+t_specifier	ft_putchar(const char ch)
 {
-	const char	*ori_s;
+	t_specifier	spec;
+	char		str[2];
 
-	ori_s = s;
-	while (*s != '\0')
-		s++;
-	return (s - ori_s);
+	str[0] = ch;
+	str[1] = '\0';
+	spec.str = ft_strdup(str);
+	spec.len = 1;
+	return (spec);
 }

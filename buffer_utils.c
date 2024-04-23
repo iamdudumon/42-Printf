@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   buffer_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dukim <dukim@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 16:33:59 by dukim             #+#    #+#             */
-/*   Updated: 2024/03/04 18:29:35 by dukim            ###   ########.fr       */
+/*   Created: 2024/04/23 15:08:34 by dukim             #+#    #+#             */
+/*   Updated: 2024/04/23 15:09:22 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+void	clean_buffer(t_buffer *buf, int *res)
 {
-	const char	*ori_s;
+	if (buf->len > 0)
+	{
+		write(1, buf->content, buf->len);
+		*res += buf->len;
+		buf->len = 0;
+	}
+}
 
-	ori_s = s;
-	while (*s != '\0')
-		s++;
-	return (s - ori_s);
+void	store_buffer(t_buffer *buf, int *res, char ch)
+{
+	if (buf->len == BUFFER_SIZE)
+		clean_buffer(buf, res);
+	buf->content[buf->len] = ch;
+	buf->content[buf->len + 1] = '\0';
+	(buf->len)++;
 }
