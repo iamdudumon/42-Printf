@@ -6,7 +6,7 @@
 /*   By: dukim <dukim@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 01:47:36 by dukim             #+#    #+#             */
-/*   Updated: 2024/04/21 01:47:38 by dukim            ###   ########.fr       */
+/*   Updated: 2024/04/23 15:21:09 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ t_specifier	ft_putaddr(t_format *format, const void *addr)
 	t_specifier	spec;
 	t_specifier	tmp;
 
-    if (!addr)
+	if (!addr)
 	{
 		if (format->precision_flag && format->precision < 5)
-        {
-            spec.str = ft_strdup("");
-            spec.len = 0;
-            return (spec);
-        }
-        spec.str = ft_strdup("(nil)");
+		{
+			spec.str = ft_strdup("");
+			spec.len = 0;
+			return (spec);
+		}
+		spec.str = ft_strdup("(nil)");
 		spec.len = 5;
 		return (spec);
 	}

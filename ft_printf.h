@@ -6,12 +6,12 @@
 /*   By: dukim <dukim@student.42gyeonsan.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:29:50 by dukim             #+#    #+#             */
-/*   Updated: 2024/04/11 17:47:02 by dukim            ###   ########.fr       */
+/*   Updated: 2024/04/23 15:08:15 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+# define FT_PRINTF_H
 
 # define BUFFER_SIZE 42
 
@@ -57,7 +57,8 @@ void		store_buffer(t_buffer *buf, int *res, char ch);
 t_specifier	ft_putchar(const char ch);
 t_specifier	ft_putstr(t_format *format, const char *str);
 t_specifier	ft_putnbr(t_format *format, int n, int sign_flag);
-t_specifier	ft_puthex(t_format *format, unsigned long n, char case_flag, char addr_flag);
+t_specifier	ft_puthex(t_format *format, unsigned long n, \
+							char case_flag, char addr_flag);
 t_specifier	ft_putaddr(t_format *format, const void *addr);
 
 t_format	make_format(const char *str, va_list args);

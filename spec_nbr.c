@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_diu.c                                        :+:      :+:    :+:   */
+/*   spec_nbr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dukim <dukim@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:43:50 by dukim             #+#    #+#             */
-/*   Updated: 2024/04/20 21:43:51 by dukim            ###   ########.fr       */
+/*   Updated: 2024/04/23 15:25:00 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	pow_ten(unsigned int un)
 	return (pow / 10);
 }
 
-static char *make_zero_precision(int precision_len)
+static char	*make_zero_precision(int precision_len)
 {
-	char *zero;
+	char	*zero;
 
 	if (precision_len <= 0)
 	{
@@ -34,17 +34,17 @@ static char *make_zero_precision(int precision_len)
 		return (zero);
 	}
 	zero = (char *)malloc(precision_len + 1);
-    ft_memset(zero, '0', precision_len);
+	ft_memset(zero, '0', precision_len);
 	zero[precision_len] = '\0';
 	return (zero);
 }
 
-static char *make_nbr_str(int n, int sign_flag)
+static char	*make_nbr_str(int n, int sign_flag)
 {
 	char				nbr[12];
 	unsigned int		pow;
 	unsigned int		un;
-	int				i;
+	int					i;
 
 	if (n == 0)
 		return (ft_strdup("0"));
@@ -68,23 +68,23 @@ static char *make_nbr_str(int n, int sign_flag)
 t_specifier	ft_putnbr(t_format *format, int n, int sign_flag)
 {
 	t_specifier			spec;
-    char                *zero;
-    char                *nbr;
+	char				*zero;
+	char				*nbr;
 
 	if (format->precision_flag)
-        format->zero_flag = 0;
+		format->zero_flag = 0;
 	if (format->plus_flag)
 		format->blank_flag = 0;
-    spec.sign_ch = '+';
+	spec.sign_ch = '+';
 	if (sign_flag && n >= 0 && format->blank_flag)
 	{
 		spec.sign_ch = ' ';
-		format->blank_flag= 0;
+		format->blank_flag = 0;
 		format->plus_flag = 1;
 	}
 	if (sign_flag && n < 0)
-        spec.sign_ch = '-';
-    nbr = make_nbr_str(n, sign_flag);
+		spec.sign_ch = '-';
+	nbr = make_nbr_str(n, sign_flag);
 	if (*nbr == '0' && (format->precision_flag && !format->precision))
 	{
 		spec.str = ft_strdup("");
@@ -93,9 +93,9 @@ t_specifier	ft_putnbr(t_format *format, int n, int sign_flag)
 		return (spec);
 	}
 	zero = make_zero_precision(format->precision - (int)ft_strlen(nbr));
-    spec.str = ft_strjoin(zero, nbr);
+	spec.str = ft_strjoin(zero, nbr);
 	spec.len = ft_strlen(spec.str);
-    free(nbr);
-    free(zero);
+	free(nbr);
+	free(zero);
 	return (spec);
 }
