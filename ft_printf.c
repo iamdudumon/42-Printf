@@ -55,7 +55,7 @@ static int	print_format(char **str, va_list args, int *res)
 	t_format	format;
 
 	if (**str == '\0')
-		return (-1);
+		return (0);
 	format = make_format(*str, args);
 	if (format.flag.error == 1)
 		return (0);
