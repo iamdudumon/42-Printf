@@ -26,6 +26,17 @@ typedef struct s_buffer
 	int			len;
 }				t_buffer;
 
+typedef struct s_flag
+{
+	char		plus;
+	char		minus;
+	char		zero;
+	char		sharp;
+	char		blank;
+	char		precision;
+	char		error;
+}				t_flag;
+
 typedef struct s_specifier
 {
 	char		*str;
@@ -36,16 +47,10 @@ typedef struct s_specifier
 typedef struct s_format
 {
 	char		specifier;
-	char		plus_flag;
-	char		minus_flag;
-	char		zero_flag;
-	char		sharp_flag;
-	char		blank_flag;
-	char		precision_flag;
-	char		error_flag;
 	int			width;
 	int			precision;
 	int			size;
+	t_flag		flag;
 	t_specifier	spec;
 }				t_format;
 
@@ -61,6 +66,6 @@ t_specifier	ft_puthex(t_format *format, unsigned long n, \
 							char case_flag, char addr_flag);
 t_specifier	ft_putaddr(t_format *format, const void *addr);
 
-t_format	make_format(const char *str, va_list args);
+t_format	make_format(char *str, va_list args);
 
 #endif
