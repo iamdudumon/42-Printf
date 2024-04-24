@@ -12,6 +12,17 @@
 
 #include "ft_printf.h"
 
+static int	is_zero_str(const char *str)
+{
+	while (*str != '\0')
+	{
+		if (*str != '0')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 static char	*make_zero_precision(int precision_len)
 {
 	char	*zero;
@@ -31,7 +42,7 @@ static char	*make_sharp_str(char *str, char case_flag, char sharp_flag)
 {
 	char	*pre;
 
-	if (!sharp_flag || ft_atoi(str) == 0)
+	if (!sharp_flag || is_zero_str(str))
 		return (ft_strdup(str));
 	pre = "0x";
 	if (!case_flag)
