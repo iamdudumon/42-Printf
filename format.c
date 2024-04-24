@@ -6,91 +6,103 @@
 /*   By: dukim <dukim@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:55:01 by dukim             #+#    #+#             */
-/*   Updated: 2024/04/23 15:16:23 by dukim            ###   ########.fr       */
+/*   Updated: 2024/04/24 15:36:26 by dukim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	set_flag(t_format *format)
+static int	get_digit(int num)
 {
-	if (!format->spec.str)
-		format->error_flag = 1;
-	if (format->spec.sign_ch == '-')
-		format->plus_flag = 1;
-	if (format->plus_flag && (format->specifier != 'd' \
-							&& format->specifier != 'i'))
-		format->plus_flag = 0;
-	if (format->zero_flag && format->minus_flag)
-		format->zero_flag = 0;
+	int	digit;
+
+	digit = 0;
+	while (num)
+	{
+		num /= 10;
+		digit++;
+	}
+	return (digit);
 }
 
-t_specifier	make_specifier(t_format *format, char type, va_list args)
+static t_flag	make_flag(char **str)
+{
+	t_flag	flag;
+
+	ft_memset(&flag, 0, sizeof(t_flag));
+	while (**str == '+' || **str == '-' || **str == '0' \
+						|| **str == '#' || **str == ' ')
+	{
+		if (**str == '+')
+			flag.plus = 1;
+		if (**str == '-')
+			flag.minus = 1;
+		if (**str == '0')
+			flag.zero = 1;
+		if (**str == '#')
+			flag.sharp = 1;
+		if (**str == ' ')
+			flag.blank = 1;
+		(*str)++;
+	}
+	return (flag);
+}
+
+static void	set_flag(t_specifier *spec, t_flag *flag, char specifier)
+{
+	if (!spec->str)
+		flag->error = 1;
+	if (spec->sign_ch == '-')
+		flag->plus = 1;
+	if (specifier != 'd' && specifier != 'i')
+		flag->plus = 0;
+	if (flag->zero && flag->minus)
+		flag->zero = 0;
+}
+
+t_specifier	make_specifier(t_format *format, char specifier, va_list args)
 {
 	t_specifier	temp;
 
-	if (type == 'c')
+	temp.str = 0;
+	if (specifier == 'c')
 		temp = ft_putchar(va_arg(args, int));
-	if (type == 's')
+	if (specifier == 's')
 		temp = ft_putstr(format, va_arg(args, char *));
-	if (type == 'd' || type == 'i' || type == 'u')
-		temp = ft_putnbr(format, va_arg(args, int), type != 'u');
-	if (type == 'p')
+	if (specifier == 'd' || specifier == 'i' || specifier == 'u')
+		temp = ft_putnbr(format, va_arg(args, int), specifier != 'u');
+	if (specifier == 'p')
 		temp = ft_putaddr(format, va_arg(args, void *));
-	if (type == 'X' || type == 'x')
-		temp = ft_puthex(format, va_arg(args, unsigned int), type == 'x', 0);
-	if (type == '%')
+	if (specifier == 'X' || specifier == 'x')
+		temp = ft_puthex(format, va_arg(args, unsigned int), \
+										specifier == 'x', 0);
+	if (specifier == '%')
 		temp = ft_putchar('%');
 	return (temp);
 }
 
-t_format	make_format(const char *str, va_list args)
+t_format	make_format(char *str, va_list args)
 {
 	t_format	format;
-	int			width_len;
-	int			precision_len;
+	const char	*ori_s;
 
+	ori_s = str;
 	ft_memset(&format, 0, sizeof(t_format));
-	width_len = 0;
-	precision_len = 0;
-	while (*str == '+' || *str == '-' || *str == '0' \
-						|| *str == '#' || *str == ' ')
-	{
-		if (*str == '+')
-			format.plus_flag = 1;
-		if (*str == '-')
-			format.minus_flag = 1;
-		if (*str == '0')
-			format.zero_flag = 1;
-		if (*str == '#')
-			format.sharp_flag = 1;
-		if (*str == ' ')
-			format.blank_flag = 1;
-		format.size++;
-		str++;
-	}
-	while ('0' <= *str && *str <= '9')
-	{
-		width_len++;
-		format.size++;
-		str++;
-	}
-	format.width = ft_atoi(str - width_len);
+	format.flag = make_flag(&str);
+	format.width = ft_atoi(str);
+	str += get_digit(format.width);
 	if (*str == '.')
 	{
 		str++;
-		format.size++;
-		format.precision_flag = 1;
-		while ('0' <= *str && *str <= '9')
-		{
-			precision_len++;
-			format.size++;
-			str++;
-		}
+		format.flag.precision = 1;
 	}
-	format.precision = ft_atoi(str - precision_len);
-	format.spec = make_specifier(&format, *str, args);
+	format.precision = ft_atoi(str);
+	if (*str == '0')
+		str++;
+	str += get_digit(format.precision);
 	format.specifier = *str;
-	set_flag(&format);
+	format.spec = make_specifier(&format, format.specifier, args);
+	format.size = str - ori_s;
+	set_flag(&format.spec, &format.flag, format.specifier);
 	return (format);
 }

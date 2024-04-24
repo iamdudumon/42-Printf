@@ -72,10 +72,10 @@ t_specifier	ft_puthex(t_format *format, unsigned long n, \
 	char		*hex_str;
 	char		*temp;
 
-	if (format->precision_flag)
-		format->zero_flag = 0;
+	if (format->flag.precision)
+		format->flag.zero = 0;
 	hex_str = make_hex_str(n, case_flag, addr_flag);
-	if (*hex_str == '0' && (format->precision_flag && !format->precision))
+	if (*hex_str == '0' && (format->flag.precision && !format->precision))
 	{
 		spec.str = ft_strdup("");
 		spec.len = ft_strlen(spec.str);
@@ -84,7 +84,7 @@ t_specifier	ft_puthex(t_format *format, unsigned long n, \
 	}
 	zero = make_zero_precision(format->precision - (int)ft_strlen(hex_str));
 	temp = ft_strjoin(zero, hex_str);
-	spec.str = make_sharp_str(temp, case_flag, format->sharp_flag);
+	spec.str = make_sharp_str(temp, case_flag, format->flag.sharp);
 	spec.len = ft_strlen(spec.str);
 	free(temp);
 	free(zero);

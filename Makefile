@@ -26,7 +26,7 @@ all		:	$(NAME)
 
 $(NAME) : $(OBJS)
 	make all -C $(LIBFT)/
-	@cp $(LIBFT)/$(LIBFT_LIB) $(LIBFT_LIB)
+	@cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
 	ar rc $(NAME) $(OBJS)
 
 $(OBJS)	:	$(SRC)

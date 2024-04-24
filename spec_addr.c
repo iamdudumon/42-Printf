@@ -19,7 +19,7 @@ t_specifier	ft_putaddr(t_format *format, const void *addr)
 
 	if (!addr)
 	{
-		if (format->precision_flag && format->precision < 5)
+		if (format->flag.precision && format->precision < 5)
 		{
 			spec.str = ft_strdup("");
 			spec.len = 0;

@@ -18,7 +18,7 @@ t_specifier	ft_putstr(t_format *format, const char *str)
 
 	if (!str)
 	{
-		if (format->precision_flag && format->precision < 6)
+		if (format->flag.precision && format->precision < 6)
 		{
 			spec.str = ft_strdup("");
 			spec.len = 0;
@@ -29,7 +29,7 @@ t_specifier	ft_putstr(t_format *format, const char *str)
 		return (spec);
 	}
 	spec.len = ft_strlen(str);
-	if (format->precision_flag && format->precision < (int)ft_strlen(str))
+	if (format->flag.precision && format->precision < (int)ft_strlen(str))
 		spec.len = format->precision;
 	spec.str = ft_substr(str, 0, spec.len);
 	return (spec);
