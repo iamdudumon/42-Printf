@@ -77,7 +77,12 @@ t_specifier	make_specifier(t_format *format, char specifier, va_list args)
 		temp = ft_puthex(format, va_arg(args, unsigned int), \
 										specifier == 'x', 0);
 	if (specifier == '%')
+	{
+		ft_memset(&(format->flag), 0, sizeof(t_flag));
+		format->precision = 0;
+		format->width = 0;
 		temp = ft_putchar('%');
+	}
 	return (temp);
 }
 
