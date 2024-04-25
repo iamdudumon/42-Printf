@@ -32,9 +32,6 @@ $(NAME) : $(OBJS)
 $(OBJS)	:	$(SRC)
 	$(CC) $(CFLAGS) -c $(SRC)
 
-bonus:
-	@make BONUS=1 all
-
 clean:
 	@rm -f $(OBJS)
 	make clean -C $(LIBFT)
