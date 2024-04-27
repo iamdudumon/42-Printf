@@ -16,6 +16,7 @@ t_specifier	ft_putstr(t_format *format, const char *str)
 {
 	t_specifier	spec;
 
+	ft_memset(&spec, 0, sizeof(t_specifier));
 	if (!str)
 	{
 		if (format->flag.precision && format->precision < 6)

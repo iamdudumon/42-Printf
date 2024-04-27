@@ -17,6 +17,7 @@ t_specifier	ft_putaddr(t_format *format, const void *addr)
 	t_specifier	spec;
 	t_specifier	tmp;
 
+	ft_memset(&spec, 0, sizeof(t_specifier));
 	if (!addr)
 	{
 		if (format->flag.precision && format->precision < 5)

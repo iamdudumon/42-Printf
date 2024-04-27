@@ -62,28 +62,28 @@ static void	set_flag(t_specifier *spec, t_flag *flag, char specifier)
 
 t_specifier	make_specifier(t_format *format, char specifier, va_list args)
 {
-	t_specifier	temp;
+	t_specifier	spec;
 
-	temp.str = 0;
+	ft_memset(&spec, 0, sizeof(t_specifier));
 	if (specifier == 'c')
-		temp = ft_putchar(va_arg(args, int));
+		spec = ft_putchar(va_arg(args, int));
 	if (specifier == 's')
-		temp = ft_putstr(format, va_arg(args, char *));
+		spec = ft_putstr(format, va_arg(args, char *));
 	if (specifier == 'd' || specifier == 'i' || specifier == 'u')
-		temp = ft_putnbr(format, va_arg(args, int), specifier != 'u');
+		spec = ft_putnbr(format, va_arg(args, int), specifier != 'u');
 	if (specifier == 'p')
-		temp = ft_putaddr(format, va_arg(args, void *));
+		spec = ft_putaddr(format, va_arg(args, void *));
 	if (specifier == 'X' || specifier == 'x')
-		temp = ft_puthex(format, va_arg(args, unsigned int), \
+		spec = ft_puthex(format, va_arg(args, unsigned int), \
 										specifier == 'x', 0);
 	if (specifier == '%')
 	{
 		ft_memset(&(format->flag), 0, sizeof(t_flag));
 		format->precision = 0;
 		format->width = 0;
-		temp = ft_putchar('%');
+		spec = ft_putchar('%');
 	}
-	return (temp);
+	return (spec);
 }
 
 t_format	make_format(char *str, va_list args)

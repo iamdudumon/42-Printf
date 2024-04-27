@@ -17,6 +17,7 @@ t_specifier	ft_putchar(const char ch)
 	t_specifier	spec;
 	char		str[2];
 
+	ft_memset(&spec, 0, sizeof(t_specifier));
 	str[0] = ch;
 	str[1] = '\0';
 	spec.str = ft_strdup(str);

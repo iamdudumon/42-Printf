@@ -88,6 +88,7 @@ t_specifier	ft_putnbr(t_format *format, int n, int sign_flag)
 	char				*zero;
 	char				*nbr;
 
+	ft_memset(&spec, 0, sizeof(t_specifier));
 	set_flag_sign(format, &spec.sign_ch, n, sign_flag);
 	nbr = make_nbr_str(n, sign_flag);
 	if (*nbr == '0' && (format->flag.precision && !format->precision))

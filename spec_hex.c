@@ -83,6 +83,7 @@ t_specifier	ft_puthex(t_format *format, unsigned long n, \
 	char		*hex_str;
 	char		*temp;
 
+	ft_memset(&spec, 0, sizeof(t_specifier));
 	if (format->flag.precision)
 		format->flag.zero = 0;
 	hex_str = make_hex_str(n, case_flag, addr_flag);
