@@ -20,12 +20,15 @@ CFLAGS	=	-Wall -Wextra -Werror
 SRC		= 	ft_printf.c format.c buffer_utils.c spec_char.c spec_str.c spec_nbr.c spec_hex.c spec_addr.c
 OBJS	=	$(SRC:.c=.o)
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re bonus
 
 all		:	$(NAME)
 
+bonus:
+	@make all
+
 $(NAME) : $(OBJS)
-	make all -C $(LIBFT)/
+	@make all -C $(LIBFT)/
 	@cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
 	ar rc $(NAME) $(OBJS)
 
