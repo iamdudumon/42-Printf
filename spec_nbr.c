@@ -65,31 +65,31 @@ static char	*make_nbr_str(int n, int sign_flag)
 	return (ft_strdup(nbr));
 }
 
-static void	set_flag_sign(t_format *format, char *sign_ch, int n, int sign_flag)
+static char	make_sign_ch(t_flag *flag, char sign_flag, char actual_flag)
 {
-	if (format->flag.precision)
-		format->flag.zero = 0;
-	if (format->flag.plus)
-		format->flag.blank = 0;
-	*sign_ch = '+';
-	if (sign_flag && n >= 0 && format->flag.blank)
+	if (flag->precision)
+		flag->zero = 0;
+	if (flag->plus)
+		flag->blank = 0;
+	if (sign_flag && actual_flag && flag->blank)
 	{
-		*sign_ch = ' ';
-		format->flag.blank = 0;
-		format->flag.plus = 1;
+		flag->blank = 0;
+		flag->plus = 1;
+		return (' ');
 	}
-	if (sign_flag && n < 0)
-		*sign_ch = '-';
+	if (sign_flag && !actual_flag)
+		return ('-');
+	return ('+');
 }
 
-t_specifier	ft_putnbr(t_format *format, int n, int sign_flag)
+t_specifier	ft_putnbr(t_format *format, int n, char sign_flag)
 {
 	t_specifier			spec;
 	char				*zero;
 	char				*nbr;
 
 	ft_memset(&spec, 0, sizeof(t_specifier));
-	set_flag_sign(format, &spec.sign_ch, n, sign_flag);
+	spec.sign_ch = make_sign_ch(&(format->flag), sign_flag, n >= 0);
 	nbr = make_nbr_str(n, sign_flag);
 	if (*nbr == '0' && (format->flag.precision && !format->precision))
 	{

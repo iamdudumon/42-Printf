@@ -61,7 +61,7 @@ void		store_buffer(t_buffer *buf, int *res, char ch);
 
 t_specifier	ft_putchar(const char ch);
 t_specifier	ft_putstr(t_format *format, const char *str);
-t_specifier	ft_putnbr(t_format *format, int n, int sign_flag);
+t_specifier	ft_putnbr(t_format *format, int n, char sign_flag);
 t_specifier	ft_puthex(t_format *format, unsigned long n, \
 							char case_flag, char addr_flag);
 t_specifier	ft_putaddr(t_format *format, const void *addr);
