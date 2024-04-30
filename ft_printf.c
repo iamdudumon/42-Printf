@@ -54,13 +54,14 @@ static int	print_format(char **str, va_list args, int *res)
 {
 	t_format	format;
 
+	(*str)++;
 	if (**str == '\0')
 		return (0);
 	format = make_format(*str, args);
 	if (format.flag.error == 1)
 		return (0);
 	*str += format.size + 1;
-	if (format.width - format.spec.len - (format.flag.plus != 0) <= 0)
+	if (format.width <= format.spec.len + (format.flag.plus != 0))
 		*res += (format.flag.plus != 0) + format.spec.len;
 	else
 		*res += format.width;
@@ -80,17 +81,20 @@ int	ft_printf(const char *str, ...)
 	res = 0;
 	while (*str != '\0')
 	{
-		if (*str == '%')
+		if (*str != '%')
 		{
-			clean_buffer(&buf, &res);
+			store_buffer(&buf, &res, *str);
 			str++;
-			if (!print_format((char **)&str, args, &res))
-				return (-1);
 			continue ;
 		}
-		store_buffer(&buf, &res, *str);
-		str++;
+		clean_buffer(&buf, &res);
+		if (!print_format((char **)&str, args, &res))
+		{
+			va_end(args);
+			return (-1);
+		}
 	}
+	va_end(args);
 	clean_buffer(&buf, &res);
 	return (res);
 }
