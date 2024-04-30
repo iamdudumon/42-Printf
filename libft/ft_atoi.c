@@ -12,41 +12,15 @@
 
 #include "libft.h"
 
-static int	is_space_ch(char ch)
+unsigned int	ft_atoi(const char *nptr)
 {
-	if ((9 <= ch && ch <= 13) || ch == ' ')
-		return (1);
-	return (0);
-}
-
-static int	is_sign_ch(char ch)
-{
-	if (ch == '+' || ch == '-')
-		return (1);
-	return (0);
-}
-
-int	ft_atoi(const char *nptr)
-{
-	int	sum;
-	int	minus_cnt;
+	unsigned int	sum;
 
 	sum = 0;
-	minus_cnt = 0;
-	while (is_space_ch(*nptr))
-		nptr++;
-	if (is_sign_ch(*nptr))
-	{
-		if (*nptr == '-')
-			minus_cnt++;
-		nptr++;
-	}
-	while (*nptr != '\0' && ft_isdigit(*nptr))
+	while (ft_isdigit(*nptr))
 	{
 		sum = sum * 10 + (*nptr - '0');
 		nptr++;
 	}
-	if (minus_cnt)
-		sum = -sum;
 	return (sum);
 }
