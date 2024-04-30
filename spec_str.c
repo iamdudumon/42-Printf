@@ -30,7 +30,8 @@ t_specifier	ft_putstr(t_format *format, const char *str)
 		return (spec);
 	}
 	spec.len = ft_strlen(str);
-	if (format->flag.precision && format->precision < (int)ft_strlen(str))
+	if (format->flag.precision \
+		&& format->precision < (unsigned int)ft_strlen(str))
 		spec.len = format->precision;
 	spec.str = ft_substr(str, 0, spec.len);
 	return (spec);

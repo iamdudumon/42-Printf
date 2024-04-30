@@ -22,8 +22,8 @@
 
 typedef struct s_buffer
 {
-	char		content[BUFFER_SIZE];
-	int			len;
+	char			content[BUFFER_SIZE];
+	unsigned int	len;
 }				t_buffer;
 
 typedef struct s_flag
@@ -39,19 +39,19 @@ typedef struct s_flag
 
 typedef struct s_specifier
 {
-	char		*str;
-	char		sign_ch;
-	int			len;
+	char			*str;
+	char			sign_ch;
+	unsigned int	len;
 }				t_specifier;
 
 typedef struct s_format
 {
-	char		specifier;
-	int			width;
-	int			precision;
-	int			size;
-	t_flag		flag;
-	t_specifier	spec;
+	char			specifier;
+	unsigned int	width;
+	unsigned int	precision;
+	unsigned int	size;
+	t_flag			flag;
+	t_specifier		spec;
 }				t_format;
 
 int			ft_printf(const char *str, ...);

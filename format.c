@@ -48,16 +48,17 @@ static t_flag	make_flag(char **str)
 	return (flag);
 }
 
-static void	set_flag(t_specifier *spec, t_flag *flag, char specifier)
+static void	set_flag(t_format *format)
 {
-	if (!spec->str)
-		flag->error = 1;
-	if (spec->sign_ch == '-')
-		flag->plus = 1;
-	if (specifier != 'd' && specifier != 'i')
-		flag->plus = 0;
-	if (flag->zero && flag->minus)
-		flag->zero = 0;
+	if (!format->spec.str || \
+		format->width > 2147483647 || format->precision > 2147483647)
+		format->flag.error = 1;
+	if (format->spec.sign_ch == '-')
+		format->flag.plus = 1;
+	if (format->specifier != 'd' && format->specifier != 'i')
+		format->flag.plus = 0;
+	if (format->flag.zero && format->flag.minus)
+		format->flag.zero = 0;
 }
 
 t_specifier	make_specifier(t_format *format, char specifier, va_list args)
@@ -108,6 +109,6 @@ t_format	make_format(char *str, va_list args)
 	format.specifier = *str;
 	format.spec = make_specifier(&format, format.specifier, args);
 	format.size = str - ori_s;
-	set_flag(&format.spec, &format.flag, format.specifier);
+	set_flag(&format);
 	return (format);
 }
